@@ -44,4 +44,4 @@ connection string ODBC compliant DSN of source system
 ### Logical Flow
 1. Execute DDL creation scripts
 1. Execute DML insertion scripts
-1. given a required 
+1. populate destination tables by sampling from column probility models
