@@ -9,8 +9,10 @@ Simulation is one way-there is *no-way to reproduce source data from simulated d
 ODBC compatible source data (eg MS SQL Database, Denodo)
 
 ## Statistical Profile
+
 ### input: 
 connection string ODBC compliant DSN of source system
+
 ### output:
 - rerunnable DDL scripts to create empty structures
 - rerunnable DML scripts to populate non-private data
@@ -20,6 +22,7 @@ connection string ODBC compliant DSN of source system
   - table, 
   - column 
     - parameterized multinomal probability model (ie collection of distinct column values (aka outcome values) and there respective probabilties)
+
 ### Logical Flow
 1. Extract meta data from source schema
    A. generate rerunnable DDL scripts
@@ -39,8 +42,10 @@ connection string ODBC compliant DSN of source system
 ### input: 
 - *[output of Statistical Profile](##Statistical-Profile)*
 - desired row counts for simulated tables
+
 ### output:
 - Fake data
+
 ### Logical Flow
 1. Execute DDL creation scripts
 1. Execute DML insertion scripts
