@@ -1,0 +1,150 @@
+#pragma once
+
+#include "stdafx.h"
+//
+//#include <vector>
+//#include <list>
+//#include <map>
+//#include <memory>
+//#include <algorithm>
+//#include <sql.h>
+
+namespace db
+{
+	using namespace std;
+	class column;
+	class table;
+	class database;
+	class join;
+
+	class server
+	{
+		string server_name;
+		vector<shared_ptr<database>> databases_;
+	};
+
+	class database
+	{
+		string database_name_;
+		shared_ptr<server> parent_;
+		vector<shared_ptr<table>> tables_;
+	public:
+		database(const string& database_name)
+			: database_name_(database_name)
+		{
+		}
+		const string& database_name() const
+		{
+			return database_name_;
+		}
+		const vector<shared_ptr<table>>& tables() const
+		{
+			return tables_;
+		}
+		void set_tables(const vector<shared_ptr<table>>& tables_)
+		{
+			this->tables_ = tables_;
+		}
+	};
+	
+	class query
+	{
+		string query_name_;
+		shared_ptr<server> parent_;
+		vector<join> joins_;
+	};
+
+	class join
+	{
+		vector<tuple<column,column>> join_column_pairs_;
+	};
+
+	class table
+	{
+		string table_name_;
+		shared_ptr<database> parent_;
+		vector<shared_ptr<column>> columns_;
+	public:
+		table(const string& table_name, const vector<shared_ptr<column>>& columns_, const shared_ptr<database>& database)
+			: table_name_(table_name),
+			columns_(columns_),
+			parent_(database)
+		{
+		}
+		table(const string& table_name, const shared_ptr<database>& database)
+			: table_name_(table_name),
+			parent_(database)
+		{
+		}
+		const string& table_name() const
+		{
+			return table_name_;
+		}
+		const vector<shared_ptr<column>>& columns() const
+		{
+			return columns_;
+		}
+		const shared_ptr<database>& parent() const
+		{
+			return parent_;
+		}
+	};
+
+	class column
+	{
+		string column_name_;
+		shared_ptr<table> parent_;
+		int precision_;
+		int scale_;
+		int max_width_;
+		bool is_nullable_;
+		bool is_computed_;
+		string column_alias_;
+
+	public:
+		column(const string& column_name, int precision, int scale, int max_width, bool is_nullable, const shared_ptr<table>& parent)
+			: column_name_(column_name),
+			precision_(precision),
+			scale_(scale),
+			max_width_(max_width),
+			is_nullable_(is_nullable),
+			parent_(parent)
+		{
+		}
+		column(const string& column_name, int precision, int scale, int max_width, bool is_nullable, bool is_candidate_key, int distinct_count, const shared_ptr<table>& parent)
+			: column_name_(column_name),
+			precision_(precision),
+			scale_(scale),
+			max_width_(max_width),
+			is_nullable_(is_nullable),
+			parent_(parent)
+		{
+		}
+		const string& column_name() const
+		{
+			return column_name_;
+		}
+		const int& precision() const
+		{
+			return precision_;
+		}
+		const int& scale() const
+		{
+			return scale_;
+		}
+		const int& max_width() const
+		{
+			return max_width_;
+		}
+		const bool& is_nullable() const
+		{
+			return is_nullable_;
+		}
+		const shared_ptr<table>& parent() const
+		{
+			return parent_;
+		}
+	};
+	
+	
+}
