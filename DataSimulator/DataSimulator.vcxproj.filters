@@ -24,12 +24,39 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SqlTableInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OdbcConnection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="unit_tests.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="table.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="column.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="column_value_histogram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DataSimulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SqlTableInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OdbcConnection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="table.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

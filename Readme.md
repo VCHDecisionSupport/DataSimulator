@@ -11,7 +11,8 @@ ODBC compatible source data (eg MS SQL Database, Denodo)
 ## Statistical Profile
 
 ### input: 
-connection string ODBC compliant DSN of source system
+- connection string ODBC compliant DSN of source system
+- parameter file specifying list of tables that will be copied as is from source to destination
 
 ### output:
 - rerunnable DDL scripts to create empty structures
