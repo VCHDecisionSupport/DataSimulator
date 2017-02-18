@@ -2,6 +2,7 @@
 #include"stdafx.h"
 // https://code.msdn.microsoft.com/ODBC-sample-191624ae
 using namespace std;
+
 #include "ColumnInfo.h"
 //struct ColumnInfo
 //{

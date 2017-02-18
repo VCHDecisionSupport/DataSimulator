@@ -15,14 +15,14 @@ namespace unit_test
 	void OdbcConnection_()
 	{
 		odbc_connection conn;
-		conn.just_do_it();
-		conn.just_do_it();
+		conn.connect();
+		conn.connect();
 	}
 
 	void sql_query()
 	{
 		odbc_connection conn;
-		conn.just_do_it();
+		conn.connect();
 		conn.execute_sql(wstring(L"SELECT * FROM master.sys.tables;"));
 		
 	}

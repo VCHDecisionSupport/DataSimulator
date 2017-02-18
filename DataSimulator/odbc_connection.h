@@ -30,7 +30,6 @@ class odbc_connection //: public data_source_connection
 	
 	std::vector<ColumnInfo> *_column_infos = nullptr;
 
-	bool connect();
 
 	void PopulateColumnInfo()
 	{
@@ -129,71 +128,8 @@ public:
 	//{
 
 	//}
-	void just_do_it()
-	{
-		connect();
-	}
-	void execute_sql(wstring stmt)
-	{
-		wchar_t sql_statement_str[sizeof(stmt) + 1];
-		lstrcpy(sql_statement_str, stmt.c_str());
-
-		SQLAllocHandle(SQL_HANDLE_STMT, _input_handle, &_statement_handle);
-		SQLRETURN RetCode = SQLExecDirect(_statement_handle, sql_statement_str, SQL_NTS);
-
-		SQLSMALLINT result_column_count; /* number of columns returned from execution of sql statement */
-		SQLLEN affected_row_count;
-
-		switch (RetCode)
-		{
-		case SQL_SUCCESS_WITH_INFO:
-		{
-			std::cout << "HandleDiagnosticRecord(hStmt, SQL_HANDLE_STMT, RetCode);" << std::endl;
-			// fall through
-		}
-		case SQL_SUCCESS:
-		{
-			std::cout << "SQL_SUCCESS" << std::endl;
-			SQLNumResultCols(_statement_handle, &result_column_count);
-			if (result_column_count > 0)
-			{
-				_result_column_count = result_column_count;
-				std::cout << "result_column_count: " << result_column_count << std::endl;
-				//PopulateColumnInfo();
-			}
-			else
-			{
-				cout << "no columns returned from query" << endl;
-			}
-			SQLRowCount(_statement_handle, &affected_row_count);
-			if (affected_row_count > 0)
-			{
-				std::cout << "affected_row_count: " << affected_row_count << std::endl;
-
-				if (affected_row_count >= 0)
-				{
-					wprintf(L"%Id %s affected\n",
-						affected_row_count,
-						affected_row_count == 1 ? L"row" : L"rows");
-				}
-			}
-			else
-			{
-				cout << "no rows affected by statement" << endl;
-			}
-			break;
-		}
-		case SQL_ERROR:
-		{
-			std::cout << "SQL_ERROR" << std::endl;
-			//HandleDiagnosticRecord(hStmt, SQL_HANDLE_STMT, RetCode);
-			break;
-		}
-		default:
-			fwprintf(stderr, L"Unexpected return code %hd!\n", RetCode);
-		}
-		//TODO: clean up memory allocations
-	}
+	bool connect();
+	void execute_sql(wstring stmt);
 	~odbc_connection();
 };
 
