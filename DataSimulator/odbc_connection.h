@@ -32,11 +32,11 @@ namespace odbc {
 		SQLHSTMT _statement_handle = nullptr; /* SQLHANDLE SQLHSTMT sql handle statement */
 
 		std::vector<ColumnInfo> *_column_infos = nullptr;
-
-
+		vector<vector<wstring>> rows_of_columns_of_data_;
+		
 		void PopulateColumnInfo();
-		void InitializeResults(SqlDataPoint** this_data_row);
 		void ProcessResults();
+		void InitializeResults(SqlDataPoint** this_data_row);
 
 	public:
 		odbc_connection();

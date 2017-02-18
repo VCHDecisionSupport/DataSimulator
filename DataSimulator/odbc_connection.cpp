@@ -94,8 +94,8 @@ inline void odbc::odbc_connection::ProcessResults()
 	SQLRETURN sql_return = 0;
 	bool data_returned = true;
 	uint32_t this_row_number = 0;
+	//vector<vector<wstring>> rows_of_columns_of_data_;
 	InitializeResults(&first_data_point);
-
 	do {
 
 		sql_return = SQLFetch(_statement_handle);
@@ -108,19 +108,30 @@ inline void odbc::odbc_connection::ProcessResults()
 		}
 		else
 		{
+			vector<wstring> columns_;
+			//(_result_column_count);
 			data_returned = true;
 			//cout << "data_returned = true" << endl;
 			for (this_data_point = first_data_point; this_data_point; this_data_point = this_data_point->sNext)
 			{
-				//wcout << this->_column_infos->at(this_data_point->column_index - 1).column_name << ": ";
-				if (this_data_point->wcSize != SQL_NULL_DATA)
+				wcout << this->_column_infos->at(this_data_point->column_index - 1).column_name << ": ";
+				if (this_data_point->wcSize == SQL_NULL_DATA)
 				{
-					//wcout << this_data_point->wcData << endl;
+					columns_.push_back(L"SQL_NULL_DATA");
+				}
+				else
+				{
+					//columns_.at(this_data_point->column_index - 1) = wstring(this_data_point->wcData);
+					columns_.push_back(wstring(this_data_point->wcData));
+					wcout << this_data_point->wcData << endl;
+					wcout << *(end(columns_) - 1) << endl;
 				}
 			}
-
+			rows_of_columns_of_data_.push_back(columns_);
+			cout << "row complete" << endl;
 		}
-	} while (!data_returned && this_row_number < 10000);
+		break;
+	} while (data_returned && this_row_number < 10000);
 
 	while (first_data_point)
 	{
@@ -134,6 +145,7 @@ inline void odbc::odbc_connection::ProcessResults()
 
 odbc::odbc_connection::odbc_connection()
 {
+	rows_of_columns_of_data_ = vector<vector<wstring>>();
 	/* this matches a preexisting 64 bit System DSN */
 	//conn_str = wstring(L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;"); /* dsn connection string (pop window magically happens) */
 
@@ -142,66 +154,9 @@ odbc::odbc_connection::odbc_connection()
 
 inline vector<vector<wstring>> odbc::odbc_connection::execute_sql_query(wstring stmt)
 {
-	wcout << "executing sql: " << endl << stmt << endl;
-	wchar_t sql_statement_str[sizeof(stmt) + 1];
-	lstrcpy(sql_statement_str, stmt.c_str());
-
-	SQLAllocHandle(SQL_HANDLE_STMT, _input_handle, &_statement_handle);
-	SQLRETURN RetCode = SQLExecDirect(_statement_handle, sql_statement_str, SQL_NTS);
-
-	SQLSMALLINT result_column_count; /* number of columns returned from execution of sql statement */
-	SQLLEN affected_row_count;
-
-	switch (RetCode)
-	{
-	case SQL_SUCCESS_WITH_INFO:
-	{
-		std::cout << "HandleDiagnosticRecord(hStmt, SQL_HANDLE_STMT, RetCode);" << std::endl;
-		// fall through
-	}
-	case SQL_SUCCESS:
-	{
-		std::cout << "SQL_SUCCESS" << std::endl;
-		SQLNumResultCols(_statement_handle, &result_column_count);
-		if (result_column_count > 0)
-		{
-			_result_column_count = result_column_count;
-			std::cout << "result_column_count: " << result_column_count << std::endl;
-			//PopulateColumnInfo();
-		}
-		else
-		{
-			cout << "no columns returned from query" << endl;
-		}
-		SQLRowCount(_statement_handle, &affected_row_count);
-		if (affected_row_count > 0)
-		{
-			std::cout << "affected_row_count: " << affected_row_count << std::endl;
-
-			if (affected_row_count >= 0)
-			{
-				wprintf(L"%Id %s affected\n",
-					affected_row_count,
-					affected_row_count == 1 ? L"row" : L"rows");
-			}
-		}
-		else
-		{
-			cout << "no rows affected by statement" << endl;
-		}
-		break;
-	}
-	case SQL_ERROR:
-	{
-		std::cout << "SQL_ERROR" << std::endl;
-		//HandleDiagnosticRecord(hStmt, SQL_HANDLE_STMT, RetCode);
-		break;
-	}
-	default:
-		fwprintf(stderr, L"Unexpected return code %hd!\n", RetCode);
-	}
-	//TODO: clean up memory allocations
-	return vector<vector<wstring>>();
+	execute_sql(stmt);
+	ProcessResults();
+	return rows_of_columns_of_data_;
 }
 
 bool odbc::odbc_connection::connect()
@@ -287,7 +242,7 @@ void odbc::odbc_connection::execute_sql(wstring stmt)
 		{
 			_result_column_count = result_column_count;
 			std::cout << "result_column_count: " << result_column_count << std::endl;
-			//PopulateColumnInfo();
+			PopulateColumnInfo();
 		}
 		else
 		{

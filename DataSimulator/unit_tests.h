@@ -24,6 +24,17 @@ namespace unit_test
 	{
 		odbc_connection conn;
 		conn.connect();
-		conn.execute_sql(wstring(L"SELECT * FROM master.sys.tables;"));
+		vector<vector<wstring>> data = conn.execute_sql_query(wstring(L"SELECT * FROM master.sys.tables;"));
+		cout << "rows recieved: " << sizeof(data) << endl;
+		wcout << "first data point: " << data.at(0).at(0) << endl;
+		for (auto row : data)
+		{
+			cout << "number of columns : " << sizeof(row) << endl;
+			for (auto dpt : row)
+			{
+				wcout << dpt << endl;
+			}
+		}
+
 	}
 }
