@@ -1,5 +1,6 @@
 #pragma once
 #include"stdafx.h"
+#include"data_source_connection.h"
 #include "ColumnInfo.h"
 
 namespace odbc {
@@ -19,7 +20,7 @@ namespace odbc {
 
 
 	// rejigged version of SqlTableInfo ODBC database sample 
-	class odbc_connection //: public data_source_connection
+	class odbc_connection : public data_source_connection
 	{
 		//L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;"
 		SQLWCHAR* dsnName = (SQLWCHAR*)"SysDsnWwi";
@@ -38,16 +39,8 @@ namespace odbc {
 
 	public:
 		odbc_connection();
-		//void execute_odbc_statement(string stmt)
-		//{
-
-		//}
-
-
-		//void generate_schema_model(vector<unique_ptr<table>> schema)
-		//{
-
-		//}
+		vector<vector<wstring>> execute_sql_query(wstring sql_query) override;
+		
 		bool connect();
 		void execute_sql(wstring stmt);
 		~odbc_connection();
