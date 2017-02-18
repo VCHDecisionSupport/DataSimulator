@@ -5,6 +5,7 @@
 
 namespace unit_test
 {
+	using namespace odbc;
 	void SqlTableInfo_()
 	{
 		SqlTableInfo x;

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-inline void odbc_connection::PopulateColumnInfo()
+inline void odbc::odbc_connection::PopulateColumnInfo()
 {
 	using namespace std;
 	std::cout << "PopulateColumnInfo (" << _result_column_count << " columns)" << std::endl;
@@ -54,7 +54,7 @@ inline void odbc_connection::PopulateColumnInfo()
 	}
 }
 
-inline void odbc_connection::InitializeResults(SqlDataPoint ** this_data_row)
+inline void odbc::odbc_connection::InitializeResults(SqlDataPoint ** this_data_row)
 {
 	SqlDataPoint* this_data_point = nullptr;
 	SqlDataPoint* prev_data_point = nullptr;
@@ -88,7 +88,7 @@ inline void odbc_connection::InitializeResults(SqlDataPoint ** this_data_row)
 
 }
 
-odbc_connection::odbc_connection()
+odbc::odbc_connection::odbc_connection()
 {
 	/* this matches a preexisting 64 bit System DSN */
 	//conn_str = wstring(L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;"); /* dsn connection string (pop window magically happens) */
@@ -97,7 +97,7 @@ odbc_connection::odbc_connection()
 }
 
 
-bool odbc_connection::connect()
+bool odbc::odbc_connection::connect()
 {
 	// mutex with function
 	std::mutex conn_mutex;
@@ -153,7 +153,7 @@ bool odbc_connection::connect()
 	}
 }
 
-void odbc_connection::execute_sql(wstring stmt)
+void odbc::odbc_connection::execute_sql(wstring stmt)
 {
 	wcout << "executing sql: " << endl << stmt << endl;
 	wchar_t sql_statement_str[sizeof(stmt) + 1];
@@ -216,7 +216,7 @@ void odbc_connection::execute_sql(wstring stmt)
 	//TODO: clean up memory allocations
 }
 
-odbc_connection::~odbc_connection()
+odbc::odbc_connection::~odbc_connection()
 {
 	cout << "cleaning up ODBC connection" << endl;
 	if (_statement_handle)

@@ -11,7 +11,9 @@
 
 DECLARE @database_name varchar(500);
 SET @database_name = 'CommunityMart';
-SET @database_name = 'WideWorldImporters';
+SET @database_name = 'WideWorldImportersDW';
+DECLARE @table_name varchar(500);
+SET @table_name = 'Payment Method'
 DECLARE @sql varchar(MAX) = '
 SELECT
 	sch.name AS schema_name
@@ -22,6 +24,8 @@ JOIN '+QUOTENAME(@database_name)+'.sys.tables AS tab
 ON sch.schema_id = tab.schema_id
 JOIN '+QUOTENAME(@database_name)+'.sys.columns as col
 ON tab.object_id = col.object_id
+WHERE 1=1
+AND tab.name = '''+@table_name+'''
 ';
 
 
