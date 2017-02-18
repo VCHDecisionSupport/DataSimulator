@@ -6,7 +6,7 @@ class column;
 class table
 {
 	/*vector<unique_ptr<column>> columns_;*/
-	string table_name_;
+	wstring table_name_;
 public:
 	table();
 	void set_columns(vector<unique_ptr<column>> columns);
