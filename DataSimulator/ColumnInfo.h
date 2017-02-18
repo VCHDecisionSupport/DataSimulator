@@ -41,4 +41,15 @@ struct SqlDataPoint
 	WCHAR *wcData;             /* display buffer   */
 	SQLLEN wcSize;                 /* size or null     */
 	struct SqlDataPoint  *sNext;                 /* linked list      */
+	friend std::wostream& operator<<(std::wostream& os, const SqlDataPoint& obj)
+	{
+		return os
+			<< L"Column Index:\n\t"
+			<< obj.column_index << endl
+			<< L"Size:\n\t"
+			<< obj.wcSize << endl
+			<< L"Data:\n\t"
+			<< obj.wcData << endl;
+	}
 };
+

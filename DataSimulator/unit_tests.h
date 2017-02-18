@@ -25,6 +25,5 @@ namespace unit_test
 		odbc_connection conn;
 		conn.connect();
 		conn.execute_sql(wstring(L"SELECT * FROM master.sys.tables;"));
-		
 	}
 }

@@ -87,6 +87,51 @@ inline void odbc::odbc_connection::InitializeResults(SqlDataPoint ** this_data_r
 	}
 }
 
+inline void odbc::odbc_connection::ProcessResults()
+{
+	SqlDataPoint* this_data_point = nullptr;
+	SqlDataPoint* first_data_point = nullptr;
+	SQLRETURN sql_return = 0;
+	bool data_returned = true;
+	uint32_t this_row_number = 0;
+	InitializeResults(&first_data_point);
+
+	do {
+
+		sql_return = SQLFetch(_statement_handle);
+		this_row_number++;
+		//cout << this_row_number << endl;
+		if (sql_return == SQL_NO_DATA_FOUND)
+		{
+			data_returned = false;
+			cout << "data_returned = false" << endl;
+		}
+		else
+		{
+			data_returned = true;
+			//cout << "data_returned = true" << endl;
+			for (this_data_point = first_data_point; this_data_point; this_data_point = this_data_point->sNext)
+			{
+				//wcout << this->_column_infos->at(this_data_point->column_index - 1).column_name << ": ";
+				if (this_data_point->wcSize != SQL_NULL_DATA)
+				{
+					//wcout << this_data_point->wcData << endl;
+				}
+			}
+
+		}
+	} while (!data_returned && this_row_number < 10000);
+
+	while (first_data_point)
+	{
+		this_data_point = first_data_point->sNext;
+		free(first_data_point->wcData);
+		free(first_data_point);
+		first_data_point = this_data_point;
+	}
+
+}
+
 odbc::odbc_connection::odbc_connection()
 {
 	/* this matches a preexisting 64 bit System DSN */
@@ -95,7 +140,7 @@ odbc::odbc_connection::odbc_connection()
 	//conn_str = L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;";
 }
 
-inline vector<vector<wstring>> odbc::odbc_connection::execute_sql_query(wstring sql_query)
+inline vector<vector<wstring>> odbc::odbc_connection::execute_sql_query(wstring stmt)
 {
 	wcout << "executing sql: " << endl << stmt << endl;
 	wchar_t sql_statement_str[sizeof(stmt) + 1];
@@ -156,8 +201,8 @@ inline vector<vector<wstring>> odbc::odbc_connection::execute_sql_query(wstring 
 		fwprintf(stderr, L"Unexpected return code %hd!\n", RetCode);
 	}
 	//TODO: clean up memory allocations
+	return vector<vector<wstring>>();
 }
-
 
 bool odbc::odbc_connection::connect()
 {

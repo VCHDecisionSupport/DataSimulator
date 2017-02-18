@@ -36,6 +36,7 @@ namespace odbc {
 
 		void PopulateColumnInfo();
 		void InitializeResults(SqlDataPoint** this_data_row);
+		void ProcessResults();
 
 	public:
 		odbc_connection();
