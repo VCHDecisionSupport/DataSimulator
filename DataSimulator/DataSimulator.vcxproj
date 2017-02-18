@@ -146,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="column.h" />
+    <ClInclude Include="ColumnInfo.h" />
     <ClInclude Include="column_value_histogram.h" />
     <ClInclude Include="data_source_connection.h" />
     <ClInclude Include="schema.h" />

@@ -1,36 +1,23 @@
 #pragma once
 #include"stdafx.h"
-#include"data_source_connection.h"
+#include "ColumnInfo.h"
+using namespace std;
+
+
+//#include"data_source_connection.h"
 const size_t DSN_STRING_MAX_LENGTH = 1000; /* max characters to store the DSN connection string */
 
-// meta data of column contained in/returned by query 
-// member fields populated by calling PopulateColumnInfo which assumes _statement_handle has been executed
-struct ColumnInfo
-{
-	std::uint32_t column_number = 0;
-	std::wstring column_name = L"";
-	std::wstring column_type = L"";
-	std::uint32_t column_octet_length = 0;
-	std::uint32_t column_precision = 0;
-	std::uint32_t column_scale = 0;
-	std::uint32_t column_display_width = 0;
+//struct SqlDataPoint
+//{
+//	SQLSMALLINT column_index;
+//	WCHAR *wcData;             /* display buffer   */
+//	SQLLEN wcSize;                 /* size or null     */
+//	struct SqlDataPoint  *sNext;                 /* linked list      */
+//};
 
-	friend std::wostream& operator<<(std::wostream& os, const ColumnInfo& obj)
-	{
-		return os
-			<< "column_name: " << obj.column_name << endl
-			<< "\t" << "column_number: " << obj.column_number << endl
-			<< "\t" << "column_type: " << obj.column_type << endl
-			<< "\t" << "column_octet_length: " << obj.column_octet_length << endl
-			<< "\t" << "column_precision: " << obj.column_precision << endl
-			<< "\t" << "column_scale: " << obj.column_scale << endl
-			<< "\t" << "column_display_width: " << obj.column_display_width << endl
-			;
-	}
-};
 
 // rejigged version of SqlTableInfo ODBC database sample 
-class odbc_connection : public data_source_connection
+class odbc_connection //: public data_source_connection
 {
 	//L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;"
 	SQLWCHAR* dsnName = (SQLWCHAR*)"SysDsnWwi";
@@ -129,10 +116,27 @@ class odbc_connection : public data_source_connection
 		}
 
 	}
-	void execute_sql(string stmt)
+	
+public:
+	odbc_connection();
+	//void execute_odbc_statement(string stmt)
+	//{
+
+	//}
+	
+
+	//void generate_schema_model(vector<unique_ptr<table>> schema)
+	//{
+
+	//}
+	void just_do_it()
 	{
-		wchar_t sql_statement_str[sizeof(stmt)+1];
-		*sql_statement_str = wstring(begin(stmt), end(stmt)).c_str(); /* sql statement string */
+		connect();
+	}
+	void execute_sql(wstring stmt)
+	{
+		wchar_t sql_statement_str[sizeof(stmt) + 1];
+		lstrcpy(sql_statement_str, stmt.c_str());
 
 		SQLAllocHandle(SQL_HANDLE_STMT, _input_handle, &_statement_handle);
 		SQLRETURN RetCode = SQLExecDirect(_statement_handle, sql_statement_str, SQL_NTS);
@@ -189,22 +193,6 @@ class odbc_connection : public data_source_connection
 			fwprintf(stderr, L"Unexpected return code %hd!\n", RetCode);
 		}
 		//TODO: clean up memory allocations
-	}
-public:
-	odbc_connection();
-	void execute_odbc_statement(string stmt)
-	{
-
-	}
-	
-
-	void generate_schema_model(vector<unique_ptr<table>> schema)
-	{
-
-	}
-	void just_do_it()
-	{
-		connect();
 	}
 	~odbc_connection();
 };

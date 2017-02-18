@@ -23,7 +23,7 @@ namespace unit_test
 	{
 		odbc_connection conn;
 		conn.just_do_it();
-		conn.execute_sql();
+		conn.execute_sql(wstring(L"SELECT * FROM master.sys.tables;"));
 		
 	}
 }

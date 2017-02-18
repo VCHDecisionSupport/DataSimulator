@@ -48,6 +48,9 @@
     <ClInclude Include="odbc_connection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ColumnInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
