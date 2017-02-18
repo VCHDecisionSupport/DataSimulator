@@ -8,11 +8,6 @@
 
 using namespace std;
 
-void populate_meta_data(odbc_connection &con, vector<unique_ptr<table>> &tables)
-{
-	
-}
-
 void user_exit()
 {
 	cout << endl << endl << "execution complete" << endl << "press enter to exit" << endl;
