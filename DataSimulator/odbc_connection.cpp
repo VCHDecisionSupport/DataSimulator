@@ -1,8 +1,8 @@
-#include "OdbcConnection.h"
+#include "odbc_connection.h"
 
 using namespace std;
 
-OdbcConnection::OdbcConnection()
+odbc_connection::odbc_connection()
 {
 	/* this matches a preexisting 64 bit System DSN */
 	//conn_str = wstring(L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;"); /* dsn connection string (pop window magically happens) */
@@ -11,7 +11,7 @@ OdbcConnection::OdbcConnection()
 }
 
 
-bool OdbcConnection::connect()
+bool odbc_connection::connect()
 {
 	// mutex with function
 	std::mutex conn_mutex;
@@ -66,7 +66,7 @@ bool OdbcConnection::connect()
 	}
 }
 
-OdbcConnection::~OdbcConnection()
+odbc_connection::~odbc_connection()
 {
 	if (_statement_handle)
 	{

@@ -31,6 +31,8 @@
 #include<vector>
 #include<mutex>
 #include<random>
+#include <locale>
+#include <codecvt>
 //#include <experimental/propagate_const>
 /*
 * SQLConnect headers

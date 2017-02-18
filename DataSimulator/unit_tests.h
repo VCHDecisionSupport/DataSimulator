@@ -1,6 +1,6 @@
 #pragma once
 #include "SqlTableInfo.h"
-#include "OdbcConnection.h"
+#include "odbc_connection.h"
 
 
 namespace unit_test
@@ -14,8 +14,16 @@ namespace unit_test
 
 	void OdbcConnection_()
 	{
-		OdbcConnection conn;
+		odbc_connection conn;
 		conn.just_do_it();
 		conn.just_do_it();
+	}
+
+	void sql_query()
+	{
+		odbc_connection conn;
+		conn.just_do_it();
+		conn.execute_sql();
+		
 	}
 }

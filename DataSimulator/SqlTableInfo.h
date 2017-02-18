@@ -1,6 +1,6 @@
 #pragma once
 #include"stdafx.h"
-
+// https://code.msdn.microsoft.com/ODBC-sample-191624ae
 using namespace std;
 
 struct ColumnInfo

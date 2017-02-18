@@ -27,9 +27,6 @@
     <ClInclude Include="SqlTableInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OdbcConnection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="unit_tests.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -40,6 +37,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="column_value_histogram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="schema.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="data_source_connection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="odbc_connection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -53,11 +59,17 @@
     <ClCompile Include="SqlTableInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OdbcConnection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="table.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="schema.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="odbc_connection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
