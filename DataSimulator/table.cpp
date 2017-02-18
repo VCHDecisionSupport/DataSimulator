@@ -2,11 +2,11 @@
 
 
 
-table::table()
+meta::table::table()
 {
 }
 
 
-table::~table()
+meta::table::~table()
 {
 }

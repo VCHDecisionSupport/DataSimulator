@@ -2,11 +2,11 @@
 
 
 
-schema::schema()
+meta::schema::schema()
 {
 }
 
 
-schema::~schema()
+meta::schema::~schema()
 {
 }
