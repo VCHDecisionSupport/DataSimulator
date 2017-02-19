@@ -10,11 +10,9 @@ namespace meta {
 	class schema
 	{
 		wstring schema_name_;
-		odbc::odbc_connection odbc_connection_;
 		vector<unique_ptr<table>> tables_;
 	public:
-		schema();
+		schema(wstring schema_name, vector<unique_ptr<table>> tables);
 		~schema();
 	};
-
 }

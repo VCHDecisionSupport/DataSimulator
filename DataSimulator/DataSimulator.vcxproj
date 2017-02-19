@@ -150,6 +150,7 @@
     <ClInclude Include="column_value_histogram.h" />
     <ClInclude Include="data_source_connection.h" />
     <ClInclude Include="schema.h" />
+    <ClInclude Include="schema_builder.h" />
     <ClInclude Include="table.h" />
     <ClInclude Include="unit_tests.h" />
     <ClInclude Include="odbc_connection.h" />
@@ -161,6 +162,7 @@
     <ClCompile Include="DataSimulator.cpp" />
     <ClCompile Include="odbc_connection.cpp" />
     <ClCompile Include="schema.cpp" />
+    <ClCompile Include="schema_builder.cpp" />
     <ClCompile Include="SqlTableInfo.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="table.cpp" />

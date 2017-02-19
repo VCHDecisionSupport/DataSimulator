@@ -1,5 +1,4 @@
 #include "odbc_connection.h"
-
 using namespace std;
 
 inline void odbc::odbc_connection::PopulateColumnInfo()
@@ -277,6 +276,27 @@ void odbc::odbc_connection::execute_sql(wstring stmt)
 	}
 	//TODO: clean up memory allocations
 }
+
+//meta::schema odbc::odbc_connection::get_meta_schema(wstring database_name)
+//{
+//	wstring sql_fmt = L"\n\
+//SELECT\n\
+//	QUOTENAME(sch.name) + '.' + QUOTENAME(tab.name) AS table_name\n\
+//	,col.name AS column_name\n\
+//FROM [%s].sys.schemas AS sch\n\
+//JOIN [%s].sys.tables AS tab\n\
+//ON sch.schema_id = tab.schema_id\n\
+//JOIN [%s].sys.columns as col\n\
+//ON tab.object_id = col.object_id;\n\
+//";
+//	wchar_t sql_arr[2000];
+//	swprintf(sql_arr, sql_fmt.c_str(), database_name.c_str(), database_name.c_str(), database_name.c_str());
+//	wstring sql(sql_arr);
+//	execute_sql(sql);
+//
+//	meta::schema_builder tmp_schema_builder(rows_of_columns_of_data_);
+//	return tmp_schema_builder.get_schema();
+//}
 
 odbc::odbc_connection::~odbc_connection()
 {

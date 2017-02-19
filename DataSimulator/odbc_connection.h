@@ -1,6 +1,7 @@
 #pragma once
 #include"stdafx.h"
 #include"data_source_connection.h"
+//#include "schema_builder.h"
 #include "ColumnInfo.h"
 
 namespace odbc {
@@ -33,7 +34,7 @@ namespace odbc {
 
 		std::vector<ColumnInfo> *_column_infos = nullptr;
 		vector<vector<wstring>> rows_of_columns_of_data_;
-		
+
 		void PopulateColumnInfo();
 		void ProcessResults();
 		void InitializeResults(SqlDataPoint** this_data_row);
@@ -41,7 +42,7 @@ namespace odbc {
 	public:
 		odbc_connection();
 		vector<vector<wstring>> execute_sql_query(wstring sql_query) override;
-		
+		//meta::schema get_meta_schema(wstring database_name);
 		bool connect();
 		void execute_sql(wstring stmt);
 		~odbc_connection();

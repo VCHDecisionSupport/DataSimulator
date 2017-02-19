@@ -37,4 +37,14 @@ namespace unit_test
 		}
 
 	}
+	void meta_data()
+	{
+		odbc_connection conn;
+		conn.connect();
+		wstring database_name = L"WideWorldImporterDW";
+		//meta::schema schema = conn.get_meta_schema(database_name);
+
+		cout << "comlete" << endl;
+
+	}
 }
