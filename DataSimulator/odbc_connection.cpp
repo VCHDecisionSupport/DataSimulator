@@ -167,8 +167,8 @@ bool odbc::odbc_connection::connect()
 	if (this->_input_handle == nullptr)
 	{
 		cout << "init ODBC connection" << endl;
-		//wstring conn_str = L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;";
-		wstring conn_str = L"DSN=SysDsnWwi;UID=user;Trusted_Connection=Yes;";
+		wstring conn_str = L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;";
+		//wstring conn_str = L"DSN=SysDsnWwi;UID=user;Trusted_Connection=Yes;";
 		SQLWCHAR    dsn_connection_string_out[DSN_STRING_MAX_LENGTH];
 		SQLSMALLINT* dsn_string_length = nullptr;
 		std::wstring dsn_connection_string(dsn_connection_string_out);

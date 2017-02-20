@@ -44,7 +44,7 @@ namespace unit_test
 		wstring database_name = L"WideWorldImporterDW";
 		//meta::schema schema = conn.get_meta_schema(database_name);
 
-		cout << "comlete" << endl;
+		cout << "complete" << endl;
 
 	}
 }

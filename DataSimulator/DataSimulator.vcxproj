@@ -159,6 +159,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="column.cpp" />
     <ClCompile Include="DataSimulator.cpp" />
     <ClCompile Include="odbc_connection.cpp" />
     <ClCompile Include="schema.cpp" />
