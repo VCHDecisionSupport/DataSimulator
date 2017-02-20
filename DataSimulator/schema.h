@@ -11,7 +11,8 @@ namespace meta {
 		wstring schema_name_;
 		vector<unique_ptr<table>> tables_;
 	public:
-		schema::schema(wstring schema_name, vector<unique_ptr<table>> tables) : schema_name_(schema_name), tables_(move(tables)) {}
+		schema() : tables_{} {}
+		schema(wstring schema_name, vector<unique_ptr<table>> tables) : schema_name_(schema_name), tables_(move(tables)) {}
 		~schema();
 	};
 }

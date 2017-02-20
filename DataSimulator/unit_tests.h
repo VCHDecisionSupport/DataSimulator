@@ -24,7 +24,7 @@ namespace unit_test
 	{
 		odbc_connection conn;
 		conn.connect();
-		vector<vector<wstring>> data = conn.execute_sql_query(wstring(L"SELECT * FROM master.sys.tables;"));
+		vector<vector<wstring>> data = conn.execute_sql_query(wstring(L"SELECT * FROM CommunityMart.sys.tables;"));
 		cout << "rows recieved: " << sizeof(data) << endl;
 		wcout << "first data point: " << data.at(0).at(0) << endl;
 		for (auto row : data)
@@ -41,8 +41,10 @@ namespace unit_test
 	{
 		odbc_connection conn;
 		conn.connect();
-		wstring database_name = L"WideWorldImporterDW";
-		//meta::schema schema = conn.get_meta_schema(database_name);
+		//wstring database_name = L"WideWorldImporterDW";
+		//vector<vector<wstring>> data = conn.execute_sql_query(wstring(L"SELECT * FROM CommunityMart.sys.tables;"));
+		wstring database_name = L"CommunityMart";
+		conn.get_meta_schema(database_name);
 
 		cout << "complete" << endl;
 

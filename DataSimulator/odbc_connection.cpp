@@ -214,11 +214,17 @@ bool odbc::odbc_connection::connect()
 	}
 }
 
-void odbc::odbc_connection::execute_sql(wstring stmt)
+void odbc::odbc_connection::execute_sql(const wstring stmt)
 {
 	wcout << "executing sql: " << endl << stmt << endl;
-	wchar_t sql_statement_str[sizeof(stmt) + 1];
-	lstrcpy(sql_statement_str, stmt.c_str());
+	if (sql_statement_str)
+	{
+		// TODO this might delete prev allocated/still used sql
+		delete[] sql_statement_str;
+	}
+	sql_statement_str = new wchar_t[stmt.length()+1];
+	wcscpy(sql_statement_str, stmt.c_str());
+
 
 	SQLAllocHandle(SQL_HANDLE_STMT, _input_handle, &_statement_handle);
 	SQLRETURN RetCode = SQLExecDirect(_statement_handle, sql_statement_str, SQL_NTS);
@@ -274,29 +280,30 @@ void odbc::odbc_connection::execute_sql(wstring stmt)
 	default:
 		fwprintf(stderr, L"Unexpected return code %hd!\n", RetCode);
 	}
-	//TODO: clean up memory allocations
 }
 
-//meta::schema odbc::odbc_connection::get_meta_schema(wstring database_name)
-//{
-//	wstring sql_fmt = L"\n\
-//SELECT\n\
-//	QUOTENAME(sch.name) + '.' + QUOTENAME(tab.name) AS table_name\n\
-//	,col.name AS column_name\n\
-//FROM [%s].sys.schemas AS sch\n\
-//JOIN [%s].sys.tables AS tab\n\
-//ON sch.schema_id = tab.schema_id\n\
-//JOIN [%s].sys.columns as col\n\
-//ON tab.object_id = col.object_id;\n\
-//";
-//	wchar_t sql_arr[2000];
-//	swprintf(sql_arr, sql_fmt.c_str(), database_name.c_str(), database_name.c_str(), database_name.c_str());
-//	wstring sql(sql_arr);
-//	execute_sql(sql);
-//
-//	meta::schema_builder tmp_schema_builder(rows_of_columns_of_data_);
-//	return tmp_schema_builder.get_schema();
-//}
+// TODO not working.  issue with unique pointer
+void odbc::odbc_connection::get_meta_schema(wstring database_name)
+{
+	wstring sql_fmt = L"\n\
+SELECT\n\
+	QUOTENAME(sch.name) + '.' + QUOTENAME(tab.name) AS table_name\n\
+	,col.name AS column_name\n\
+FROM [%s].sys.schemas AS sch\n\
+JOIN [%s].sys.tables AS tab\n\
+ON sch.schema_id = tab.schema_id\n\
+JOIN [%s].sys.columns as col\n\
+ON tab.object_id = col.object_id;";
+
+	wchar_t sql_arr[2000];
+	swprintf(sql_arr, sql_fmt.c_str(), database_name.c_str(), database_name.c_str(), database_name.c_str());
+	wstring sql(sql_arr);
+	wcout << sql << endl;
+	execute_sql_query(sql);
+
+	//meta::schema_builder::build_schema(database_name, rows_of_columns_of_data_);
+	//return schema_;
+}
 
 odbc::odbc_connection::~odbc_connection()
 {
@@ -315,5 +322,9 @@ odbc::odbc_connection::~odbc_connection()
 	if (_environment_handle)
 	{
 		SQLFreeHandle(SQL_HANDLE_ENV, _environment_handle);
+	}
+	if (sql_statement_str)
+	{
+		delete[] sql_statement_str;
 	}
 }
