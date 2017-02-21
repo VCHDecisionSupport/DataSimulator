@@ -19,10 +19,11 @@ namespace odbc {
 	// rejigged version of SqlTableInfo ODBC database sample 
 	class odbc_connection : public data_source_connection
 	{
-		//L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;"
-		SQLWCHAR* dsnName = (SQLWCHAR*)"SysDsnWwi";
-		SQLWCHAR* userID = (SQLWCHAR*)"SysDsnWwi";
-		SQLWCHAR* passwd = (SQLWCHAR*)"SysDsnWwi";
+		// ODBC data source name passed into SQLDriverConnect
+		std::wstring dsn_name_in_;
+		// ODBC data source name returned from SQLDriverConnect
+		std::wstring dsn_name_out_;
+		
 		SQLSMALLINT _result_column_count = 0; /* number of columns returned by sql statement */
 		SQLHENV _environment_handle = nullptr; /* SQLHANDLE SQLHENV sql handle enviroment */
 		SQLHDBC _input_handle = nullptr; /* SQLHANDLE SQLHDBC sql handle database connection */

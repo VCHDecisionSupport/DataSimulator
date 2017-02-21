@@ -142,11 +142,9 @@ inline void odbc::odbc_connection::ProcessResults()
 
 odbc::odbc_connection::odbc_connection()
 {
-	rows_of_columns_of_data_ = std::vector<std::vector<std::wstring>>();
-	/* this matches a preexisting 64 bit System DSN */
-	//conn_str = std::wstring(L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;"); /* dsn connection string (pop window magically happens) */
-
-	//conn_str = L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;";
+	dsn_name_in_ = std::wstring(L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;");
+	dsn_name_in_ = std::wstring(L"DSN=SysDsnWwi;UID=user;Trusted_Connection=Yes;");
+	dsn_name_in_ = std::wstring(L"DSN=DevOdbcSqlServer;");
 }
 
 inline std::vector<std::vector<std::wstring>> odbc::odbc_connection::execute_sql_query(std::wstring stmt)
@@ -158,20 +156,16 @@ inline std::vector<std::vector<std::wstring>> odbc::odbc_connection::execute_sql
 
 bool odbc::odbc_connection::connect()
 {
-	// mutex with function
+	// mutex within function
 	std::mutex conn_mutex;
 	// lock mutex before accessing shared resource
 	std::lock_guard<std::mutex> lock(conn_mutex);
 	if (this->_input_handle == nullptr)
 	{
 		std::cout << "init ODBC connection" << std::endl;
-		std::wstring conn_str = L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;";
-		//std::wstring conn_str = L"DSN=SysDsnWwi;UID=user;Trusted_Connection=Yes;";
-		SQLWCHAR    dsn_connection_string_out[DSN_STRING_MAX_LENGTH];
+		
+		SQLWCHAR dsn_connection_string_out[DSN_STRING_MAX_LENGTH];
 		SQLSMALLINT* dsn_string_length = nullptr;
-		std::wstring dsn_connection_string(dsn_connection_string_out);
-
-
 
 		SQLRETURN retcode;
 		if (SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, &_environment_handle) == SQL_ERROR)
@@ -187,12 +181,14 @@ bool odbc::odbc_connection::connect()
 		// Register this as an application that expects 3.x behavior,
 		// you must register something if you use AllocHandle
 		SQLSetEnvAttr(_environment_handle, SQL_ATTR_ODBC_VERSION, (SQLPOINTER)SQL_OV_ODBC3, 0);
-		// Allocate a connection
+		// Allocate a connection handle
 		SQLAllocHandle(SQL_HANDLE_DBC, _environment_handle, &_input_handle);
-		retcode = SQLDriverConnect(_input_handle, GetDesktopWindow(), (SQLWCHAR*)conn_str.c_str(), SQL_NTS, dsn_connection_string_out, DSN_STRING_MAX_LENGTH, dsn_string_length, SQL_DRIVER_COMPLETE);
+		// connect to ODBC driver using dsn_name_in_
+		retcode = SQLDriverConnect(_input_handle, GetDesktopWindow(), (SQLWCHAR*)dsn_name_in_.c_str(), SQL_NTS, dsn_connection_string_out, DSN_STRING_MAX_LENGTH, dsn_string_length, SQL_DRIVER_COMPLETE);
 		if (retcode == SQL_SUCCESS || retcode == SQL_SUCCESS_WITH_INFO) {
-			std::wcout << L"connection established:\n\tinstring:  " << conn_str << std::endl;
-			std::wcout << L"\toutstring: " << std::wstring(dsn_connection_string_out) << std::endl;
+			std::wcout << L"connection established:\n\tinstring:  " << dsn_name_in_ << std::endl;
+			dsn_name_out_ = std::wstring(dsn_connection_string_out);
+			std::wcout << L"\toutstring: " << dsn_name_out_ << std::endl;
 		}
 		else
 		{
