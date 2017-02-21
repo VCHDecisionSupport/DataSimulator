@@ -14,5 +14,6 @@ namespace meta {
 		schema() : tables_{} {}
 		schema(wstring schema_name, vector<unique_ptr<table>> tables) : schema_name_(schema_name), tables_(move(tables)) {}
 		~schema();
+		friend std::wostream& operator<< (std::wostream& stream, const meta::schema& schema_);
 	};
 }

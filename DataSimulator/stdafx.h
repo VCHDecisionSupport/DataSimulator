@@ -33,6 +33,8 @@
 #include<random>
 #include <locale>
 #include <codecvt>
+#include <algorithm>
+
 //#include <experimental/propagate_const>
 /*
 * SQLConnect headers
@@ -44,7 +46,7 @@
 *Web headers
 *
 */
-//#include<ostream>
+//#include<wostream>
 //#include<memory>
 
 //using namespace std;

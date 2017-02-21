@@ -12,5 +12,6 @@ namespace meta {
 		column() :column_name_{} {}
 		column(wstring column_name) :column_name_(column_name) {};
 		~column();
+		friend std::wostream& operator<< (std::wostream& stream, const meta::column& column_);
 	};
 }
