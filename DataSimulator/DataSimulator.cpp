@@ -19,6 +19,8 @@ int main()
 	//unit_test::SqlTableInfo_();
 	//unit_test::OdbcConnection_();
 	//unit_test::sql_query();
+	////unit_test::schema_builder();
+	//unit_test::schema_class_builder();
 	unit_test::meta_data();
 	user_exit();
     return 0;

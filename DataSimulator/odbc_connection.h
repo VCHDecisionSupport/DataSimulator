@@ -43,7 +43,7 @@ namespace odbc {
 	public:
 		odbc_connection();
 		vector<vector<wstring>> execute_sql_query(wstring sql_query) override;
-		void get_meta_schema(wstring database_name);
+		meta::schema get_meta_schema(wstring database_name);
 		bool connect();
 		void execute_sql(wstring stmt);
 		~odbc_connection();

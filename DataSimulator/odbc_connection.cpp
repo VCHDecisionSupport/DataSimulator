@@ -283,7 +283,7 @@ void odbc::odbc_connection::execute_sql(const wstring stmt)
 }
 
 // TODO not working.  issue with unique pointer
-void odbc::odbc_connection::get_meta_schema(wstring database_name)
+meta::schema odbc::odbc_connection::get_meta_schema(wstring database_name)
 {
 	wstring sql_fmt = L"\n\
 SELECT\n\
@@ -301,6 +301,8 @@ ON tab.object_id = col.object_id;";
 	wcout << sql << endl;
 	execute_sql_query(sql);
 
+	return meta::schema_builder::build_schema(database_name, rows_of_columns_of_data_);
+	//meta::schema schema_;
 	//meta::schema_builder::build_schema(database_name, rows_of_columns_of_data_);
 	//return schema_;
 }
