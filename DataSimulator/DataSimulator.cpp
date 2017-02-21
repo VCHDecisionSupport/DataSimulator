@@ -6,11 +6,9 @@
 #include "table.h"
 #include "schema.h"
 
-using namespace std;
-
 void user_exit()
 {
-	cout << endl << endl << "execution complete" << endl << "press enter to exit" << endl;
+	std::cout << std::endl << std::endl << "execution complete" << std::endl << "press enter to exit" << std::endl;
 	getchar();
 }
 
@@ -24,6 +22,6 @@ int main()
 	//unit_test::meta_data();
 	unit_test::meta_output();
 	user_exit();
-    return 0;
+	return 0;
 }
 

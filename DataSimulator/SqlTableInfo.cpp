@@ -4,7 +4,7 @@
 SqlTableInfo::SqlTableInfo()
 {
 	/* this matches a preexisting 64 bit System DSN */
-	wstring conn_str(L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;"); /* dsn connection string (pop window magically happens) */
+	std::wstring conn_str(L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;"); /* dsn connection string (pop window magically happens) */
 	const size_t DSN_STRING_MAX_LENGTH = 1000; /* max characters to store the DSN connection string */
 	SQLWCHAR    dsn_connection_string_out[DSN_STRING_MAX_LENGTH];
 	SQLSMALLINT* dsn_string_length = nullptr;
@@ -26,12 +26,12 @@ SqlTableInfo::SqlTableInfo()
 	SQLAllocHandle(SQL_HANDLE_DBC, _environment_handle, &_input_handle);
 	retcode = SQLDriverConnect(_input_handle, GetDesktopWindow(), (SQLWCHAR*)conn_str.c_str(), SQL_NTS, dsn_connection_string_out, DSN_STRING_MAX_LENGTH, dsn_string_length, SQL_DRIVER_COMPLETE);
 	if (retcode == SQL_SUCCESS || retcode == SQL_SUCCESS_WITH_INFO) {
-		wcout << "connection established:\n\tinstring:  " << conn_str << endl;
-		wcout << "\toutstring: " << wstring(dsn_connection_string_out) << endl;
+		std::wcout << "connection established:\n\tinstring:  " << conn_str << std::endl;
+		std::wcout << "\toutstring: " << std::wstring(dsn_connection_string_out) << std::endl;
 	}
 	else
 	{
-		cout << "connection failed" << endl;
+		std::cout << "connection failed" << std::endl;
 		if (_input_handle)
 		{
 			SQLDisconnect(_input_handle);
@@ -100,7 +100,6 @@ void SqlTableInfo::ExecuteCommand()
 
 void SqlTableInfo::PopulateColumnInfo()
 {
-	using namespace std;
 	std::cout << "PopulateColumnInfo (" << _result_column_count << " columns)" << std::endl;
 
 	WCHAR wcColumnName[100];
@@ -118,32 +117,32 @@ void SqlTableInfo::PopulateColumnInfo()
 
 		SQLColAttribute(_statement_handle, column_index, SQL_DESC_NAME, wcColumnName, sizeof(wcColumnName), nullptr, nullptr);
 		std::wstring column_name(wcColumnName);
-		//std::wcout << L"column_name: " << column_name.c_str() << " (" << column_index << ")" << std::endl;
+		//std::cout << L"column_name: " << column_name.c_str() << " (" << column_index << ")" << std::endl;
 		column_info.column_name = column_name;
 
 		SQLColAttribute(_statement_handle, column_index, SQL_DESC_TYPE_NAME, wcColumnType, sizeof(wcColumnType), nullptr, nullptr);
 		std::wstring column_type(wcColumnType);
-		//std::wcout << L"\tcolumn_type: " << column_type.c_str() << std::endl;
+		//std::cout << L"\tcolumn_type: " << column_type.c_str() << std::endl;
 		column_info.column_type = column_type;
 
 		SQLColAttribute(_statement_handle, column_index, SQL_DESC_OCTET_LENGTH, nullptr, NULL, nullptr, &uiOctetLength);
 		std::int32_t column_octet_length(uiOctetLength);
-		//std::wcout << L"\tcolumn_octet_length: " << uiOctetLength << std::endl;
+		//std::cout << L"\tcolumn_octet_length: " << uiOctetLength << std::endl;
 		column_info.column_octet_length = column_octet_length;
 
 		SQLColAttribute(_statement_handle, column_index, SQL_DESC_PRECISION, nullptr, NULL, nullptr, &uiPrecision);
 		std::int32_t column_precision(uiPrecision);
-		//std::wcout << L"\tcolumn_precision: " << uiPrecision << std::endl;
+		//std::cout << L"\tcolumn_precision: " << uiPrecision << std::endl;
 		column_info.column_precision = column_precision;
 
 		SQLColAttribute(_statement_handle, column_index, SQL_DESC_SCALE, nullptr, NULL, nullptr, &uiScale);
 		std::int32_t column_scale(uiScale);
-		//std::wcout << L"\tcolumn_scale: " << uiScale << std::endl;
+		//std::cout << L"\tcolumn_scale: " << uiScale << std::endl;
 		column_info.column_scale = column_scale;
 
 		SQLColAttribute(_statement_handle, column_index, SQL_DESC_DISPLAY_SIZE, nullptr, NULL, nullptr, &uiDisplayWidth);
 		std::int32_t column_display_width(uiDisplayWidth);
-		//std::wcout << L"\tcolumn_scale: " << uiScale << std::endl;
+		//std::cout << L"\tcolumn_scale: " << uiScale << std::endl;
 		column_info.column_display_width = column_display_width;
 
 		this->_column_infos->at(column_index - 1) = column_info;
@@ -197,22 +196,22 @@ void SqlTableInfo::ProcessResults()
 
 		sql_return = SQLFetch(_statement_handle);
 		this_row_number++;
-		//cout << this_row_number << endl;
+		//std::cout << this_row_number << std::endl;
 		if (sql_return == SQL_NO_DATA_FOUND)
 		{
 			data_returned = false;
-			cout << "data_returned = false" << endl;
+			std::cout << "data_returned = false" << std::endl;
 		}
 		else
 		{
 			data_returned = true;
-			//cout << "data_returned = true" << endl;
+			//std::cout << "data_returned = true" << std::endl;
 			for (this_data_point = first_data_point; this_data_point; this_data_point = this_data_point->sNext)
 			{
-				//wcout << this->_column_infos->at(this_data_point->column_index - 1).column_name << ": ";
+				//std::cout << this->_column_infos->at(this_data_point->column_index - 1).column_name << ": ";
 				if (this_data_point->wcSize != SQL_NULL_DATA)
 				{
-					//wcout << this_data_point->wcData << endl;
+					//std::cout << this_data_point->wcData << std::endl;
 				}
 			}
 

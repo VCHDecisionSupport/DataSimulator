@@ -5,10 +5,6 @@
 #include "ColumnInfo.h"
 
 namespace odbc {
-	using namespace std;
-
-
-	//#include"data_source_connection.h"
 	const size_t DSN_STRING_MAX_LENGTH = 1000; /* max characters to store the DSN connection string */
 
 	//struct SqlDataPoint
@@ -34,7 +30,7 @@ namespace odbc {
 		wchar_t* sql_statement_str = nullptr;
 
 		std::vector<ColumnInfo> *_column_infos = nullptr;
-		vector<vector<wstring>> rows_of_columns_of_data_;
+		std::vector<std::vector<std::wstring>> rows_of_columns_of_data_;
 
 		void PopulateColumnInfo();
 		void ProcessResults();
@@ -42,10 +38,10 @@ namespace odbc {
 
 	public:
 		odbc_connection();
-		vector<vector<wstring>> execute_sql_query(wstring sql_query) override;
-		meta::schema get_meta_schema(wstring database_name);
+		std::vector<std::vector<std::wstring>> execute_sql_query(std::wstring sql_query) override;
+		meta::schema get_meta_schema(std::wstring database_name);
 		bool connect();
-		void execute_sql(wstring stmt);
+		void execute_sql(std::wstring stmt);
 		~odbc_connection();
 	};
 

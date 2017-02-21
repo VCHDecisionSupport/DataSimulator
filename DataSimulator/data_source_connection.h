@@ -5,11 +5,10 @@
 #include "column.h"
 
 namespace odbc {
-	using namespace std;
 	class data_source_connection
 	{
 	public:
-		virtual vector<vector<wstring>> execute_sql_query(wstring sql_query) = 0;
-		//virtual meta::schema get_meta_schema(wstring database_name) = 0;
+		virtual std::vector<std::vector<std::wstring>> execute_sql_query(std::wstring sql_query) = 0;
+		//virtual meta::schema get_meta_schema(std::wstring database_name) = 0;
 	};
 }

@@ -1,6 +1,5 @@
 #pragma once
 #include "stdafx.h"
-using namespace std;
 
 class column;
 
@@ -18,9 +17,9 @@ public:
 	{
 		distribution = std::uniform_real_distribution<double>(0.0, 1.0);
 	}
-	vector<wstring> get_distinct_values();
+	std::vector<std::wstring> get_distinct_values();
 	const int distinct_count();
-	wstring rand_column_value()
+std::wstring rand_column_value()
 	{
 		double random_real = distribution(generator);
 		//TODO: binary search tree; nodes have probability and string column value.

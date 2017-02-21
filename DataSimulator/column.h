@@ -3,16 +3,15 @@
 //#include "column_value_histogram.h"
 
 namespace meta {
-	using namespace std;
 	class column
 	{
-		wstring column_name_;
-		//shared_ptr<column_value_histogram> column_value_histogram_ptr_;
+		std::wstring column_name_;
+		//std::shared_ptr<column_value_histogram> column_value_histogram_ptr_;
 	public:
 		column() :column_name_{} {}
-		column(wstring column_name) :column_name_(column_name) {};
+		column(std::wstring column_name) :column_name_(column_name) {};
 		~column();
-		wstring column_name() { return column_name_; }
+		std::wstring column_name() { return column_name_; }
 		friend std::wostream& operator<< (std::wostream& stream, const meta::column& column_);
 	};
 }

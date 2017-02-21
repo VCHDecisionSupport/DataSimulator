@@ -1,9 +1,7 @@
 #include "odbc_connection.h"
-using namespace std;
 
 inline void odbc::odbc_connection::PopulateColumnInfo()
 {
-	using namespace std;
 	std::cout << "PopulateColumnInfo (" << _result_column_count << " columns)" << std::endl;
 
 	WCHAR wcColumnName[100];
@@ -21,32 +19,32 @@ inline void odbc::odbc_connection::PopulateColumnInfo()
 
 		SQLColAttribute(_statement_handle, column_index, SQL_DESC_NAME, wcColumnName, sizeof(wcColumnName), nullptr, nullptr);
 		std::wstring column_name(wcColumnName);
-		//std::wcout << L"column_name: " << column_name.c_str() << " (" << column_index << ")" << std::endl;
+		//std::cout << L"column_name: " << column_name.c_str() << " (" << column_index << ")" << std::endl;
 		column_info.column_name = column_name;
 
 		SQLColAttribute(_statement_handle, column_index, SQL_DESC_TYPE_NAME, wcColumnType, sizeof(wcColumnType), nullptr, nullptr);
 		std::wstring column_type(wcColumnType);
-		//std::wcout << L"\tcolumn_type: " << column_type.c_str() << std::endl;
+		//std::cout << L"\tcolumn_type: " << column_type.c_str() << std::endl;
 		column_info.column_type = column_type;
 
 		SQLColAttribute(_statement_handle, column_index, SQL_DESC_OCTET_LENGTH, nullptr, NULL, nullptr, &uiOctetLength);
 		std::int32_t column_octet_length(uiOctetLength);
-		//std::wcout << L"\tcolumn_octet_length: " << uiOctetLength << std::endl;
+		//std::cout << L"\tcolumn_octet_length: " << uiOctetLength << std::endl;
 		column_info.column_octet_length = column_octet_length;
 
 		SQLColAttribute(_statement_handle, column_index, SQL_DESC_PRECISION, nullptr, NULL, nullptr, &uiPrecision);
 		std::int32_t column_precision(uiPrecision);
-		//std::wcout << L"\tcolumn_precision: " << uiPrecision << std::endl;
+		//std::cout << L"\tcolumn_precision: " << uiPrecision << std::endl;
 		column_info.column_precision = column_precision;
 
 		SQLColAttribute(_statement_handle, column_index, SQL_DESC_SCALE, nullptr, NULL, nullptr, &uiScale);
 		std::int32_t column_scale(uiScale);
-		//std::wcout << L"\tcolumn_scale: " << uiScale << std::endl;
+		//std::cout << L"\tcolumn_scale: " << uiScale << std::endl;
 		column_info.column_scale = column_scale;
 
 		SQLColAttribute(_statement_handle, column_index, SQL_DESC_DISPLAY_SIZE, nullptr, NULL, nullptr, &uiDisplayWidth);
 		std::int32_t column_display_width(uiDisplayWidth);
-		//std::wcout << L"\tcolumn_scale: " << uiScale << std::endl;
+		//std::cout << L"\tcolumn_scale: " << uiScale << std::endl;
 		column_info.column_display_width = column_display_width;
 
 		this->_column_infos->at(column_index - 1) = column_info;
@@ -93,41 +91,41 @@ inline void odbc::odbc_connection::ProcessResults()
 	SQLRETURN sql_return = 0;
 	bool data_returned = true;
 	uint32_t this_row_number = 0;
-	//vector<vector<wstring>> rows_of_columns_of_data_;
+	//std::vector<std::vector<std::wstring>> rows_of_columns_of_data_;
 	InitializeResults(&first_data_point);
 	do {
 
 		sql_return = SQLFetch(_statement_handle);
 		this_row_number++;
-		//cout << this_row_number << endl;
+		//std::cout << this_row_number << std::endl;
 		if (sql_return == SQL_NO_DATA_FOUND)
 		{
 			data_returned = false;
-			cout << "data_returned = false" << endl;
+			std::cout << "data_returned = false" << std::endl;
 		}
 		else
 		{
-			vector<wstring> columns_;
+			std::vector<std::wstring> columns_;
 			//(_result_column_count);
 			data_returned = true;
-			//cout << "data_returned = true" << endl;
+			//std::cout << "data_returned = true" << std::endl;
 			for (this_data_point = first_data_point; this_data_point; this_data_point = this_data_point->sNext)
 			{
-				wcout << this->_column_infos->at(this_data_point->column_index - 1).column_name << ": ";
+				std::wcout << this->_column_infos->at(this_data_point->column_index - 1).column_name << ": ";
 				if (this_data_point->wcSize == SQL_NULL_DATA)
 				{
 					columns_.push_back(L"SQL_NULL_DATA");
 				}
 				else
 				{
-					//columns_.at(this_data_point->column_index - 1) = wstring(this_data_point->wcData);
-					columns_.push_back(wstring(this_data_point->wcData));
-					wcout << this_data_point->wcData << endl;
-					wcout << *(end(columns_) - 1) << endl;
+					//columns_.at(this_data_point->column_index - 1) = std::wstring(this_data_point->wcData);
+					columns_.push_back(std::wstring(this_data_point->wcData));
+					std::wcout << this_data_point->wcData << std::endl;
+					std::wcout << *(end(columns_) - 1) << std::endl;
 				}
 			}
 			rows_of_columns_of_data_.push_back(columns_);
-			//cout << "row complete" << endl;
+			//std::cout << "row complete" << std::endl;
 		}
 		//break;
 	} while (data_returned && this_row_number < 10000);
@@ -144,14 +142,14 @@ inline void odbc::odbc_connection::ProcessResults()
 
 odbc::odbc_connection::odbc_connection()
 {
-	rows_of_columns_of_data_ = vector<vector<wstring>>();
+	rows_of_columns_of_data_ = std::vector<std::vector<std::wstring>>();
 	/* this matches a preexisting 64 bit System DSN */
-	//conn_str = wstring(L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;"); /* dsn connection string (pop window magically happens) */
+	//conn_str = std::wstring(L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;"); /* dsn connection string (pop window magically happens) */
 
 	//conn_str = L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;";
 }
 
-inline vector<vector<wstring>> odbc::odbc_connection::execute_sql_query(wstring stmt)
+inline std::vector<std::vector<std::wstring>> odbc::odbc_connection::execute_sql_query(std::wstring stmt)
 {
 	execute_sql(stmt);
 	ProcessResults();
@@ -166,9 +164,9 @@ bool odbc::odbc_connection::connect()
 	std::lock_guard<std::mutex> lock(conn_mutex);
 	if (this->_input_handle == nullptr)
 	{
-		cout << "init ODBC connection" << endl;
-		//wstring conn_str = L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;";
-		wstring conn_str = L"DSN=SysDsnWwi;UID=user;Trusted_Connection=Yes;";
+		std::cout << "init ODBC connection" << std::endl;
+		std::wstring conn_str = L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;";
+		//std::wstring conn_str = L"DSN=SysDsnWwi;UID=user;Trusted_Connection=Yes;";
 		SQLWCHAR    dsn_connection_string_out[DSN_STRING_MAX_LENGTH];
 		SQLSMALLINT* dsn_string_length = nullptr;
 		std::wstring dsn_connection_string(dsn_connection_string_out);
@@ -180,7 +178,7 @@ bool odbc::odbc_connection::connect()
 		{
 			std::cout << "error connecting" << std::endl;
 			//exit(-1);
-			throw exception("ODBC error: cannot connect");
+			throw std::exception("ODBC error: cannot connect");
 		}
 		else
 		{
@@ -193,12 +191,12 @@ bool odbc::odbc_connection::connect()
 		SQLAllocHandle(SQL_HANDLE_DBC, _environment_handle, &_input_handle);
 		retcode = SQLDriverConnect(_input_handle, GetDesktopWindow(), (SQLWCHAR*)conn_str.c_str(), SQL_NTS, dsn_connection_string_out, DSN_STRING_MAX_LENGTH, dsn_string_length, SQL_DRIVER_COMPLETE);
 		if (retcode == SQL_SUCCESS || retcode == SQL_SUCCESS_WITH_INFO) {
-			wcout << "connection established:\n\tinstring:  " << conn_str << endl;
-			wcout << "\toutstring: " << wstring(dsn_connection_string_out) << endl;
+			std::wcout << L"connection established:\n\tinstring:  " << conn_str << std::endl;
+			std::wcout << L"\toutstring: " << std::wstring(dsn_connection_string_out) << std::endl;
 		}
 		else
 		{
-			cout << "connection failed" << endl;
+			std::cout << "connection failed" << std::endl;
 			if (_input_handle)
 			{
 				SQLDisconnect(_input_handle);
@@ -209,22 +207,22 @@ bool odbc::odbc_connection::connect()
 			{
 				SQLFreeHandle(SQL_HANDLE_ENV, _environment_handle);
 			}
-			throw exception("ODBC error: cannot connect");
+			throw std::exception("ODBC error: cannot connect");
 			return false;
 		}
 		return true;
 	}
 }
 
-void odbc::odbc_connection::execute_sql(const wstring stmt)
+void odbc::odbc_connection::execute_sql(const std::wstring stmt)
 {
-	wcout << "executing sql: " << endl << stmt << endl;
+	std::wcout << "executing sql: " << std::endl << stmt << std::endl;
 	if (sql_statement_str)
 	{
 		// TODO this might delete prev allocated/still used sql
 		delete[] sql_statement_str;
 	}
-	sql_statement_str = new wchar_t[stmt.length()+1];
+	sql_statement_str = new wchar_t[stmt.length() + 1];
 	wcscpy(sql_statement_str, stmt.c_str());
 
 
@@ -253,7 +251,7 @@ void odbc::odbc_connection::execute_sql(const wstring stmt)
 		}
 		else
 		{
-			cout << "no columns returned from query" << endl;
+			std::cout << "no columns returned from query" << std::endl;
 		}
 		SQLRowCount(_statement_handle, &affected_row_count);
 		if (affected_row_count > 0)
@@ -269,14 +267,14 @@ void odbc::odbc_connection::execute_sql(const wstring stmt)
 		}
 		else
 		{
-			cout << "no rows affected by statement" << endl;
+			std::cout << "no rows affected by statement" << std::endl;
 		}
 		break;
 	}
 	case SQL_ERROR:
 	{
 		std::cout << "SQL_ERROR" << std::endl;
-		throw exception("ODBC error: cannot execute SQL");
+		throw std::exception("ODBC error: cannot execute SQL");
 		//HandleDiagnosticRecord(hStmt, SQL_HANDLE_STMT, RetCode);
 		break;
 	}
@@ -286,9 +284,9 @@ void odbc::odbc_connection::execute_sql(const wstring stmt)
 }
 
 // TODO not working.  issue with unique pointer
-meta::schema odbc::odbc_connection::get_meta_schema(wstring database_name)
+meta::schema odbc::odbc_connection::get_meta_schema(std::wstring database_name)
 {
-	wstring sql_fmt = L"\n\
+	std::wstring sql_fmt = L"\n\
 SELECT\n\
 	QUOTENAME(sch.name) + '.' + QUOTENAME(tab.name) AS table_name\n\
 	,col.name AS column_name\n\
@@ -300,14 +298,14 @@ ON tab.object_id = col.object_id;";
 
 	wchar_t sql_arr[2000];
 	swprintf(sql_arr, sql_fmt.c_str(), database_name.c_str(), database_name.c_str(), database_name.c_str());
-	wstring sql(sql_arr);
+	std::wstring sql(sql_arr);
 	execute_sql_query(sql);
 	return meta::schema_builder::build_schema(database_name, rows_of_columns_of_data_);
 }
 
 odbc::odbc_connection::~odbc_connection()
 {
-	cout << "cleaning up ODBC connection" << endl;
+	std::cout << "cleaning up ODBC connection" << std::endl;
 	if (_statement_handle)
 	{
 		SQLFreeHandle(SQL_HANDLE_STMT, _statement_handle);

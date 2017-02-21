@@ -8,6 +8,6 @@ std::wostream & meta::operator<<(std::wostream & stream, const meta::column & co
 {
 	stream
 		<< "\t\t" << column_.column_name_
-		<< endl;
+		<< std::endl;
 	return stream;
 }

@@ -9,9 +9,9 @@ std::wostream & meta::operator<<(std::wostream & stream, const meta::table & tab
 {
 	stream
 		<< "\t" << table_.table_name_
-		<< endl;
+		<< std::endl;
 	//std::copy(begin(table_.columns_), end(table_.columns_), out_column);
-	
+
 	std::for_each(table_.begin(), table_.end(), [&](auto column_)
 	{
 		stream << *column_;
