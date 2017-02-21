@@ -12,6 +12,7 @@
 #include<tchar.h>
 /*
 * Odbc headers
+* https://msdn.microsoft.com/en-us/library/ms714163(v=vs.85).aspx
 */
 #include<windows.h>
 #include<sql.h>
@@ -35,21 +36,9 @@
 #include <codecvt>
 #include <algorithm>
 
-//#include <experimental/propagate_const>
 /*
-* SQLConnect headers
-* https://msdn.microsoft.com/en-us/library/ms714163(v=vs.85).aspx
-*/
-#include<mbstring.h>
-
-/*
-*Web headers
+* 
+* Boost
 *
 */
-//#include<wostream>
-//#include<memory>
-
-//using namespace std;
-//#include<cpprest/http_client.h>
-//#include<cpprest/filestream.h>
-// TODO: reference additional headers your program requires here
+#include <boost/iterator/indirect_iterator.hpp>
