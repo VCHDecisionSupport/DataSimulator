@@ -11,8 +11,8 @@ namespace meta {
 	public:
 		static schema build_schema(wstring schema_name, vector<vector<wstring>> table_column_names)
 		{
-			vector<unique_ptr<table>> tables;
-			vector<unique_ptr<column>> columns;
+			vector<shared_ptr<table>> tables;
+			vector<shared_ptr<column>> columns;
 			wstring prev_table_name;
 			wstring this_table_name;
 			wstring this_column_name;
@@ -22,13 +22,13 @@ namespace meta {
 				this_column_name = table_column_name.at(1);
 				if (this_table_name != prev_table_name && prev_table_name != L"")
 				{
-					tables.push_back(make_unique<table>(prev_table_name, move(columns)));
-					columns = vector<unique_ptr<column>>();
+					tables.push_back(make_shared<table>(prev_table_name, move(columns)));
+					columns = vector<shared_ptr<column>>();
 				}
-				columns.push_back(make_unique<column>(this_column_name));
+				columns.push_back(make_shared<column>(this_column_name));
 				prev_table_name = this_table_name;
 			}
-			tables.push_back(make_unique<table>(prev_table_name, move(columns)));
+			tables.push_back(make_shared<table>(prev_table_name, move(columns)));
 			return schema(schema_name, move(tables));
 		}
 	};

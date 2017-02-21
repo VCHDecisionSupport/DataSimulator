@@ -35,10 +35,11 @@
 #include <locale>
 #include <codecvt>
 #include <algorithm>
+#include <iterator>
 
 /*
 * 
 * Boost
 *
 */
-#include <boost/iterator/indirect_iterator.hpp>
+//#include <boost/iterator/indirect_iterator.hpp>

@@ -127,9 +127,9 @@ inline void odbc::odbc_connection::ProcessResults()
 				}
 			}
 			rows_of_columns_of_data_.push_back(columns_);
-			cout << "row complete" << endl;
+			//cout << "row complete" << endl;
 		}
-		break;
+		//break;
 	} while (data_returned && this_row_number < 10000);
 
 	while (first_data_point)
@@ -167,8 +167,8 @@ bool odbc::odbc_connection::connect()
 	if (this->_input_handle == nullptr)
 	{
 		cout << "init ODBC connection" << endl;
-		wstring conn_str = L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;";
-		//wstring conn_str = L"DSN=SysDsnWwi;UID=user;Trusted_Connection=Yes;";
+		//wstring conn_str = L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;";
+		wstring conn_str = L"DSN=SysDsnWwi;UID=user;Trusted_Connection=Yes;";
 		SQLWCHAR    dsn_connection_string_out[DSN_STRING_MAX_LENGTH];
 		SQLSMALLINT* dsn_string_length = nullptr;
 		std::wstring dsn_connection_string(dsn_connection_string_out);
@@ -179,7 +179,8 @@ bool odbc::odbc_connection::connect()
 		if (SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, &_environment_handle) == SQL_ERROR)
 		{
 			std::cout << "error connecting" << std::endl;
-			exit(-1);
+			//exit(-1);
+			throw exception("ODBC error: cannot connect");
 		}
 		else
 		{
@@ -208,6 +209,7 @@ bool odbc::odbc_connection::connect()
 			{
 				SQLFreeHandle(SQL_HANDLE_ENV, _environment_handle);
 			}
+			throw exception("ODBC error: cannot connect");
 			return false;
 		}
 		return true;
@@ -274,6 +276,7 @@ void odbc::odbc_connection::execute_sql(const wstring stmt)
 	case SQL_ERROR:
 	{
 		std::cout << "SQL_ERROR" << std::endl;
+		throw exception("ODBC error: cannot execute SQL");
 		//HandleDiagnosticRecord(hStmt, SQL_HANDLE_STMT, RetCode);
 		break;
 	}
@@ -298,13 +301,8 @@ ON tab.object_id = col.object_id;";
 	wchar_t sql_arr[2000];
 	swprintf(sql_arr, sql_fmt.c_str(), database_name.c_str(), database_name.c_str(), database_name.c_str());
 	wstring sql(sql_arr);
-	wcout << sql << endl;
 	execute_sql_query(sql);
-
 	return meta::schema_builder::build_schema(database_name, rows_of_columns_of_data_);
-	//meta::schema schema_;
-	//meta::schema_builder::build_schema(database_name, rows_of_columns_of_data_);
-	//return schema_;
 }
 
 odbc::odbc_connection::~odbc_connection()

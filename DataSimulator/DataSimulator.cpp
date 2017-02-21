@@ -21,7 +21,8 @@ int main()
 	//unit_test::sql_query();
 	////unit_test::schema_builder();
 	//unit_test::schema_class_builder();
-	unit_test::meta_data();
+	//unit_test::meta_data();
+	unit_test::meta_output();
 	user_exit();
     return 0;
 }
