@@ -1,6 +1,7 @@
 #pragma once
 #include "SqlTableInfo.h"
 #include "odbc_connection.h"
+#include "ms_source_system.h"
 
 
 namespace unit_test
@@ -89,12 +90,25 @@ namespace unit_test
 
 	void meta_output()
 	{
-		odbc_connection conn;
+		std::wstring dsn_name_in(L"DSN=DevOdbcSqlServer;");
+		odbc_connection conn(dsn_name_in);
 		conn.connect();
 		//std::wstring database_name = L"WideWorldImportersDW";
 		std::wstring database_name = L"CommunityMart";
 		meta::schema schema_ = conn.get_meta_schema(database_name);
 		std::wcout << schema_ << std::endl;
 	}
-
+	void denodo_connect_query()
+	{
+		std::wstring dsn_name_in(L"DSN=DenodoODBC;");
+		odbc_connection conn(dsn_name_in);
+		conn.connect();
+		conn.execute_sql_query(L"SELECT * FROM adtcmart_admission_discharge_fact;");
+	}
+	void ms_source()
+	{
+		std::wstring dsn_name_in(L"DSN=DevOdbcSqlServer;");
+		ms_source_system ms(dsn_name_in);
+		ms.generate_meta_object(L"CommunityMart");
+	}
 }

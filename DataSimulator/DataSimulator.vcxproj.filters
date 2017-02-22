@@ -36,9 +36,6 @@
     <ClInclude Include="schema_builder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source_system.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="column.h">
       <Filter>Header Files\meta</Filter>
     </ClInclude>
@@ -75,6 +72,12 @@
     <ClInclude Include="stdafx.h">
       <Filter>Header Files\misc</Filter>
     </ClInclude>
+    <ClInclude Include="source_system.h">
+      <Filter>Header Files\odbc</Filter>
+    </ClInclude>
+    <ClInclude Include="ms_source_system.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -103,6 +106,12 @@
     </ClCompile>
     <ClCompile Include="SqlTableInfo.cpp">
       <Filter>Source Files\odbc</Filter>
+    </ClCompile>
+    <ClCompile Include="source_system.cpp">
+      <Filter>Source Files\odbc</Filter>
+    </ClCompile>
+    <ClCompile Include="ms_source_system.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

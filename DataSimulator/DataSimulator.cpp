@@ -20,7 +20,9 @@ int main()
 	////unit_test::schema_builder();
 	//unit_test::schema_class_builder();
 	//unit_test::meta_data();
-	unit_test::meta_output();
+	//unit_test::meta_output();
+	//unit_test::denodo_connect_query();
+	unit_test::ms_source();
 	user_exit();
 	return 0;
 }

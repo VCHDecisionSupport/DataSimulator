@@ -145,6 +145,7 @@ odbc::odbc_connection::odbc_connection()
 	dsn_name_in_ = std::wstring(L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;");
 	dsn_name_in_ = std::wstring(L"DSN=SysDsnWwi;UID=user;Trusted_Connection=Yes;");
 	dsn_name_in_ = std::wstring(L"DSN=DevOdbcSqlServer;");
+	dsn_name_in_ = std::wstring(L"DSN=DenodoODBC;");
 }
 
 odbc::odbc_connection::odbc_connection(std::wstring dsn_name_in) : dsn_name_in_(dsn_name_in) {}
@@ -215,12 +216,17 @@ bool odbc::odbc_connection::connect()
 void odbc::odbc_connection::execute_sql(const std::wstring stmt)
 {
 	std::wcout << "executing sql: " << std::endl << stmt << std::endl;
-	if (sql_statement_str)
+	if (stmt.length() >= 2000)
 	{
-		// TODO this might delete prev allocated/still used sql
-		delete[] sql_statement_str;
+		throw std::exception("sql query too long");
 	}
-	sql_statement_str = new wchar_t[stmt.length() + 1];
+	//if (sql_statement_str)
+	//{
+	//	// TODO this might delete prev allocated/still used sql
+	//	delete[] sql_statement_str;
+	//}
+	//sql_statement_str = new wchar_t[stmt.length() + 1];
+	wchar_t sql_statement_str[2000];
 	wcscpy(sql_statement_str, stmt.c_str());
 
 
@@ -319,8 +325,8 @@ odbc::odbc_connection::~odbc_connection()
 	{
 		SQLFreeHandle(SQL_HANDLE_ENV, _environment_handle);
 	}
-	if (sql_statement_str)
-	{
-		delete[] sql_statement_str;
-	}
+	//if (sql_statement_str)
+	//{
+	//	delete[] sql_statement_str;
+	//}
 }

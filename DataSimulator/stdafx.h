@@ -43,3 +43,4 @@
 *
 */
 //#include <boost/iterator/indirect_iterator.hpp>
+#include <boost/format.hpp>

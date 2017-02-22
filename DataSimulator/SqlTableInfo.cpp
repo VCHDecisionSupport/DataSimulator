@@ -108,7 +108,7 @@ void SqlTableInfo::PopulateColumnInfo()
 	SQLLEN uiPrecision;
 	SQLLEN uiScale;
 	SQLLEN uiDisplayWidth;
-	SQLSMALLINT nullable;           // whether column can have NULL value
+	//SQLSMALLINT nullable;           // whether column can have NULL value
 	this->_column_infos = new std::vector<ColumnInfo>(_result_column_count);
 	for (SQLSMALLINT column_index = 1; column_index <= _result_column_count; ++column_index)
 	{
