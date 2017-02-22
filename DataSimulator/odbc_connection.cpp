@@ -91,7 +91,6 @@ inline void odbc::odbc_connection::ProcessResults()
 	SQLRETURN sql_return = 0;
 	bool data_returned = true;
 	uint32_t this_row_number = 0;
-	//std::vector<std::vector<std::wstring>> rows_of_columns_of_data_;
 	InitializeResults(&first_data_point);
 	do {
 
@@ -101,27 +100,25 @@ inline void odbc::odbc_connection::ProcessResults()
 		if (sql_return == SQL_NO_DATA_FOUND)
 		{
 			data_returned = false;
-			std::cout << "data_returned = false" << std::endl;
+			//std::cout << "data_returned = false" << std::endl;
 		}
 		else
 		{
 			std::vector<std::wstring> columns_;
-			//(_result_column_count);
 			data_returned = true;
 			//std::cout << "data_returned = true" << std::endl;
 			for (this_data_point = first_data_point; this_data_point; this_data_point = this_data_point->sNext)
 			{
-				std::wcout << this->_column_infos->at(this_data_point->column_index - 1).column_name << ": ";
+				//std::wcout << this->_column_infos->at(this_data_point->column_index - 1).column_name << ": ";
 				if (this_data_point->wcSize == SQL_NULL_DATA)
 				{
 					columns_.push_back(L"SQL_NULL_DATA");
 				}
 				else
 				{
-					//columns_.at(this_data_point->column_index - 1) = std::wstring(this_data_point->wcData);
 					columns_.push_back(std::wstring(this_data_point->wcData));
-					std::wcout << this_data_point->wcData << std::endl;
-					std::wcout << *(end(columns_) - 1) << std::endl;
+					//std::wcout << this_data_point->wcData << std::endl;
+					//std::wcout << *(end(columns_) - 1) << std::endl;
 				}
 			}
 			rows_of_columns_of_data_.push_back(columns_);

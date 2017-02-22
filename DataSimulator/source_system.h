@@ -10,7 +10,7 @@ public:
 	source_system(std::wstring dsn_name);
 	virtual std::wstring schema_query() = 0;
 	virtual std::wstring schema_query(std::wstring database_name) = 0;
-	virtual meta::database generate_meta_object(std::wstring database_name) = 0;
+	virtual std::shared_ptr<meta::database> generate_meta_object(std::wstring database_name) = 0;
 	~source_system();
 };
 
