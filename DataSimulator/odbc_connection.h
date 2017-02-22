@@ -7,15 +7,6 @@
 namespace odbc {
 	const size_t DSN_STRING_MAX_LENGTH = 1000; /* max characters to store the DSN connection string */
 
-	//struct SqlDataPoint
-	//{
-	//	SQLSMALLINT column_index;
-	//	WCHAR *wcData;             /* display buffer   */
-	//	SQLLEN wcSize;                 /* size or null     */
-	//	struct SqlDataPoint  *sNext;                 /* linked list      */
-	//};
-
-
 	// rejigged version of SqlTableInfo ODBC database sample 
 	class odbc_connection : public data_source_connection
 	{
@@ -39,6 +30,7 @@ namespace odbc {
 
 	public:
 		odbc_connection();
+		odbc_connection(std::wstring dsn_name_in);
 		std::vector<std::vector<std::wstring>> execute_sql_query(std::wstring sql_query) override;
 		meta::schema get_meta_schema(std::wstring database_name);
 		bool connect();

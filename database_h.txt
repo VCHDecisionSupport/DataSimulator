@@ -148,3 +148,44 @@ namespace db
 	
 	
 }
+
+
+
+
+
+
+
+
+
+std::vector<std::tuple<std::wstring, std::wstring, std::wstring, std::wstring>> ms_database_builder::execute_schema_query()
+{
+	std::wstring sql(L"\
+SELECT\n\
+	DB_NAME() AS database_name\n\
+	, (sch.name) AS schema_name\n\
+	, (tab.name) AS table_name\n\
+	, (col.name) AS column_name\n\
+FROM sys.schemas AS sch\n\
+JOIN sys.tables AS tab\n\
+ON sch.schema_id = tab.schema_id\n\
+JOIN sys.columns as col\n\
+ON tab.object_id = col.object_id;\n\
+"
+);
+	std::vector<std::tuple<std::wstring, std::wstring, std::wstring, std::wstring>> tmp;
+	std::vector<std::vector<std::wstring>> rows_of_columns_ = ms_connection_.execute_sql_query(sql);
+	std::tuple<std::wstring, std::wstring, std::wstring, std::wstring> meta_row;
+	std::wstring database_name;
+	std::wstring schema_name;
+	std::wstring table_name;
+	std::wstring column_name;
+	std::for_each(begin(rows_of_columns_), end(rows_of_columns_), [&](auto row) {
+		database_name = row.at(0);
+		schema_name = row.at(1);
+		table_name = row.at(2);
+		column_name = row.at(3);
+		meta_row = std::tuple<std::wstring, std::wstring, std::wstring, std::wstring>(database_name, schema_name, table_name, column_name);
+		tmp.push_back(meta_row);
+	});
+	return tmp;
+}

@@ -147,6 +147,8 @@ odbc::odbc_connection::odbc_connection()
 	dsn_name_in_ = std::wstring(L"DSN=DevOdbcSqlServer;");
 }
 
+odbc::odbc_connection::odbc_connection(std::wstring dsn_name_in) : dsn_name_in_(dsn_name_in) {}
+
 inline std::vector<std::vector<std::wstring>> odbc::odbc_connection::execute_sql_query(std::wstring stmt)
 {
 	execute_sql(stmt);

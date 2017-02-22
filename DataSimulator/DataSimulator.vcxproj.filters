@@ -13,46 +13,67 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\meta">
+      <UniqueIdentifier>{c28dea26-115b-4d9b-a4e0-e726b1678e4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\odbc">
+      <UniqueIdentifier>{1faa9d6b-5380-4b1c-b8ec-d8f3ad0934b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\misc">
+      <UniqueIdentifier>{61c8e6eb-9972-4c3c-98a5-c68dc10a8f73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\meta">
+      <UniqueIdentifier>{08df461c-270a-45b7-b602-119236080d96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\odbc">
+      <UniqueIdentifier>{3e7f85ff-8bd3-43fa-b4bc-dcaeb565a1a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
+    <ClInclude Include="schema_builder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SqlTableInfo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="unit_tests.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="table.h">
+    <ClInclude Include="source_system.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="column.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\meta</Filter>
     </ClInclude>
     <ClInclude Include="column_value_histogram.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\meta</Filter>
+    </ClInclude>
+    <ClInclude Include="database.h">
+      <Filter>Header Files\meta</Filter>
     </ClInclude>
     <ClInclude Include="schema.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\meta</Filter>
     </ClInclude>
-    <ClInclude Include="data_source_connection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="odbc_connection.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="table.h">
+      <Filter>Header Files\meta</Filter>
     </ClInclude>
     <ClInclude Include="ColumnInfo.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\odbc</Filter>
     </ClInclude>
-    <ClInclude Include="schema_builder.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="data_source_connection.h">
+      <Filter>Header Files\odbc</Filter>
+    </ClInclude>
+    <ClInclude Include="odbc_connection.h">
+      <Filter>Header Files\odbc</Filter>
+    </ClInclude>
+    <ClInclude Include="SqlTableInfo.h">
+      <Filter>Header Files\odbc</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="unit_tests.h">
+      <Filter>Header Files\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files\misc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -62,23 +83,26 @@
     <ClCompile Include="DataSimulator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SqlTableInfo.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="column.cpp">
+      <Filter>Source Files\meta</Filter>
     </ClCompile>
-    <ClCompile Include="table.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="database.cpp">
+      <Filter>Source Files\meta</Filter>
     </ClCompile>
     <ClCompile Include="schema.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\meta</Filter>
+    </ClCompile>
+    <ClCompile Include="table.cpp">
+      <Filter>Source Files\meta</Filter>
     </ClCompile>
     <ClCompile Include="odbc_connection.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\odbc</Filter>
     </ClCompile>
     <ClCompile Include="schema_builder.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\odbc</Filter>
     </ClCompile>
-    <ClCompile Include="column.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="SqlTableInfo.cpp">
+      <Filter>Source Files\odbc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

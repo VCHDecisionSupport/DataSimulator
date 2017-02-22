@@ -6,6 +6,8 @@ namespace meta {
 	//using column_iterator = boost::indirect_iterator<std::vector<std::shared_ptr<column>>::const_iterator, const column>;
 	using column_iterator = std::vector<std::shared_ptr<column>>::const_iterator;
 
+
+
 	class table
 	{
 		std::wstring table_name_;
@@ -19,4 +21,13 @@ namespace meta {
 		std::wstring table_name() { return table_name_; }
 		friend std::wostream& operator<< (std::wostream& stream, const meta::table& table_);
 	};
+
+	column_iterator begin(table table_)
+	{
+		return table_.begin();
+	}
+	column_iterator end(table table_)
+	{
+		return table_.end();
+	}
 }

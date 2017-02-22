@@ -1,5 +1,6 @@
 #pragma once
 #include "stdafx.h"
+#include "database.h"
 #include "schema.h"
 #include "table.h"
 #include "column.h"
@@ -8,6 +9,7 @@ namespace meta {
 	class schema_builder
 	{
 	public:
+
 		static schema build_schema(std::wstring schema_name, std::vector<std::vector<std::wstring>> table_column_names)
 		{
 			std::vector<std::shared_ptr<table>> tables;
