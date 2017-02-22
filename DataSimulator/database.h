@@ -11,7 +11,7 @@ namespace meta {
 		std::wstring database_name_;
 		std::vector<std::shared_ptr<schema>> schemas_;
 	public:
-		database(std::wstring database_name, std::vector<std::shared_ptr<schema>> schema) : database_name_(database_name), schema_(schema) {}
+		database(std::wstring database_name, std::vector<std::shared_ptr<schema>> schemas) : database_name_(database_name), schemas_(schemas) {}
 		~database();
 		std::wstring schema_name() { return database_name_; }
 		schema_iterator begin() const { return std::begin(schemas_); }
@@ -19,12 +19,12 @@ namespace meta {
 		friend std::wostream& operator<< (std::wostream& stream, const meta::database& database_);
 	};
 
-	schema_iterator begin(database database_)
-	{
-		return database_.begin();
-	}
-	schema_iterator end(database database_)
-	{
-		return database_.end();
-	}
+	//schema_iterator begin(database database_)
+	//{
+	//	return database_.begin();
+	//}
+	//schema_iterator end(database database_)
+	//{
+	//	return database_.end();
+	//}
 }

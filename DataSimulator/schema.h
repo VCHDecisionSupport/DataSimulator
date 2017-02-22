@@ -20,12 +20,12 @@ namespace meta {
 		friend std::wostream& operator<< (std::wostream& stream, const meta::schema& schema_);
 	};
 
-	table_iterator begin(schema schema_)
-	{
-		return schema_.begin();
-	}
-	table_iterator end(schema schema_)
-	{
-		return schema_.end();
-	}
+	//table_iterator begin(schema schema_)
+	//{
+	//	return schema_.begin();
+	//}
+	//table_iterator end(schema schema_)
+	//{
+	//	return schema_.end();
+	//}
 }

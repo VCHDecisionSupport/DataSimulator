@@ -11,7 +11,7 @@ std::wostream & meta::operator<<(std::wostream & stream, const meta::database & 
 		<< std::endl;
 	std::for_each(database_.begin(), database_.end(), [&](auto schema_)
 	{
-		stream << *table_;
+		stream << *schema_;
 	});
 	return stream;
 }

@@ -22,12 +22,12 @@ namespace meta {
 		friend std::wostream& operator<< (std::wostream& stream, const meta::table& table_);
 	};
 
-	column_iterator begin(table table_)
-	{
-		return table_.begin();
-	}
-	column_iterator end(table table_)
-	{
-		return table_.end();
-	}
+	//column_iterator begin(table table_)
+	//{
+	//	return table_.begin();
+	//}
+	//column_iterator end(table table_)
+	//{
+	//	return table_.end();
+	//}
 }
