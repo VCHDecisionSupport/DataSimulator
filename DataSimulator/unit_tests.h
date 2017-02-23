@@ -111,4 +111,11 @@ namespace unit_test
 		ms_source_system ms(dsn_name_in);
 		ms.generate_meta_object(L"CommunityMart");
 	}
+
+	void signals()
+	{
+		boost::signals2::signal<void()> s;
+		s.connect([]() {std::cout << "signal fired" << std::endl; });
+		s();
+	}
 }

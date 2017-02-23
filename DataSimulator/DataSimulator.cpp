@@ -22,7 +22,8 @@ int main()
 	//unit_test::meta_data();
 	//unit_test::meta_output();
 	//unit_test::denodo_connect_query();
-	unit_test::ms_source();
+	//unit_test::ms_source();
+	unit_test::signals();
 	user_exit();
 	return 0;
 }
