@@ -107,15 +107,23 @@ namespace unit_test
 	}
 	void ms_source()
 	{
-		std::wstring dsn_name_in(L"DSN=DevOdbcSqlServer;");
+		//std::wstring dsn_name_in(L"DSN=DevOdbcSqlServer;");
+		std::wstring dsn_name_in(L"DSN=SysDsnWwi;");
 		ms_source_system ms(dsn_name_in);
-		ms.generate_meta_object(L"CommunityMart");
+		//ms.generate_meta_object(L"CommunityMart");
+		std::shared_ptr<meta::database> database_ = ms.generate_meta_object(L"WideWorldImportersDW");
+		std::wcout << "database shared_ptr use_count: " << database_.use_count() << std::endl;
+		std::for_each(database_->begin(), database_->end(), [&](std::shared_ptr<meta::schema> schema_ptr)
+		{
+			std::wcout << L"schema_name: " << schema_ptr->schema_name() << std::endl;
+			std::wcout << L"database_name: " << schema_ptr->get_parent().lock()->database_name() << std::endl;
+		});
 	}
 
-	void signals()
-	{
-		boost::signals2::signal<void()> s;
-		s.connect([]() {std::cout << "signal fired" << std::endl; });
-		s();
-	}
+	//void signals()
+	//{
+	//	boost::signals2::signal<void()> s;
+	//	s.connect([]() {std::cout << "signal fired" << std::endl; });
+	//	s();
+	//}
 }

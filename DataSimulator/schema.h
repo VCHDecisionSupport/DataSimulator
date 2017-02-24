@@ -19,7 +19,7 @@ namespace meta {
 		~schema();
 		table_iterator begin() const { return std::begin(tables_); }
 		table_iterator end() const { return std::end(tables_); }
-
+		std::weak_ptr<database> get_parent() { return database_; }
 		void set_tables(std::vector<std::shared_ptr<table>> tables) { tables_ = tables; }
 		void push_back(std::shared_ptr<table> table) { tables_.push_back(table); }
 		std::wstring schema_name() { return schema_name_; }

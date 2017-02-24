@@ -24,7 +24,6 @@ JOIN sys.tables AS tab\n\
 ON sch.schema_id = tab.schema_id\n\
 JOIN sys.columns as col\n\
 ON tab.object_id = col.object_id;\n");
-	
 	return sql;
 }
 
