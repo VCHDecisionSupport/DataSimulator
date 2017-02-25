@@ -5,6 +5,7 @@ class ms_source_system :
 	public source_system
 {
 	boost::wformat schema_query_fmt;
+
 public:
 	ms_source_system(std::wstring dsn_name);
 

@@ -10,7 +10,7 @@ inline void odbc::odbc_connection::PopulateColumnInfo()
 	SQLLEN uiPrecision;
 	SQLLEN uiScale;
 	SQLLEN uiDisplayWidth;
-	SQLSMALLINT nullable;           // whether column can have NULL value
+	//SQLSMALLINT nullable;           // whether column can have NULL value
 	this->_column_infos = new std::vector<ColumnInfo>(_result_column_count);
 	for (SQLSMALLINT column_index = 1; column_index <= _result_column_count; ++column_index)
 	{
@@ -28,22 +28,22 @@ inline void odbc::odbc_connection::PopulateColumnInfo()
 		column_info.column_type = column_type;
 
 		SQLColAttribute(_statement_handle, column_index, SQL_DESC_OCTET_LENGTH, nullptr, NULL, nullptr, &uiOctetLength);
-		std::int32_t column_octet_length(uiOctetLength);
+		signed long long column_octet_length(uiOctetLength);
 		//std::cout << L"\tcolumn_octet_length: " << uiOctetLength << std::endl;
 		column_info.column_octet_length = column_octet_length;
 
 		SQLColAttribute(_statement_handle, column_index, SQL_DESC_PRECISION, nullptr, NULL, nullptr, &uiPrecision);
-		std::int32_t column_precision(uiPrecision);
+		signed long long column_precision(uiPrecision);
 		//std::cout << L"\tcolumn_precision: " << uiPrecision << std::endl;
 		column_info.column_precision = column_precision;
 
 		SQLColAttribute(_statement_handle, column_index, SQL_DESC_SCALE, nullptr, NULL, nullptr, &uiScale);
-		std::int32_t column_scale(uiScale);
+		signed long long column_scale(uiScale);
 		//std::cout << L"\tcolumn_scale: " << uiScale << std::endl;
 		column_info.column_scale = column_scale;
 
 		SQLColAttribute(_statement_handle, column_index, SQL_DESC_DISPLAY_SIZE, nullptr, NULL, nullptr, &uiDisplayWidth);
-		std::int32_t column_display_width(uiDisplayWidth);
+		signed long long column_display_width(uiDisplayWidth);
 		//std::cout << L"\tcolumn_scale: " << uiScale << std::endl;
 		column_info.column_display_width = column_display_width;
 

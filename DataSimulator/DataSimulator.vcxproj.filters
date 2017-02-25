@@ -78,6 +78,9 @@
     <ClInclude Include="ms_source_system.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ms_column_value_histogram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -111,6 +114,9 @@
       <Filter>Source Files\odbc</Filter>
     </ClCompile>
     <ClCompile Include="ms_source_system.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ms_column_value_histogram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

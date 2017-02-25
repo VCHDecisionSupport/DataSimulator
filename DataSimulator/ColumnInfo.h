@@ -5,13 +5,13 @@
 // member fields populated by calling PopulateColumnInfo which assumes _statement_handle has been executed
 struct ColumnInfo
 {
-	std::uint32_t column_number = 0;
+	signed long long column_number = 0;
 	std::wstring column_name = L"";
 	std::wstring column_type = L"";
-	std::uint32_t column_octet_length = 0;
-	std::uint32_t column_precision = 0;
-	std::uint32_t column_scale = 0;
-	std::uint32_t column_display_width = 0;
+	signed long long column_octet_length = 0;
+	signed long long column_precision = 0;
+	signed long long column_scale = 0;
+	signed long long column_display_width = 0;
 
 	friend std::wostream& operator<<(std::wostream& os, const ColumnInfo& obj)
 	{
