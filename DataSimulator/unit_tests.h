@@ -2,6 +2,7 @@
 #include "SqlTableInfo.h"
 #include "odbc_connection.h"
 #include "ms_source_system.h"
+#include "column_value_histogram.h"
 
 
 namespace unit_test
@@ -119,7 +120,16 @@ namespace unit_test
 			std::wcout << L"database_name: " << schema_ptr->get_parent().lock()->database_name() << std::endl;
 		});
 	}
-
+	void value_histogram()
+	{
+		meta::histogram test_hist;
+		test_hist.push_back(std::make_unique<meta::histogram_entry>(std::wstring(L"most frequent"), 100, 0.5, 0.5));
+		test_hist.push_back(std::make_unique<meta::histogram_entry>(std::wstring(L"2nd most frequent"), 100, 0.3, 0.8));
+		test_hist.push_back(std::make_unique<meta::histogram_entry>(std::wstring(L"least most frequent"), 100, 0.2, 1.0));
+		meta::column_value_histogram value_histogram(std::move(test_hist));
+		std::wstring col_value = value_histogram.rand_column_value();
+		std::wcout << "returned from histogram object: " << col_value << std::endl;
+	}
 	//void signals()
 	//{
 	//	boost::signals2::signal<void()> s;

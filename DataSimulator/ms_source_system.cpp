@@ -2,7 +2,7 @@
 
 
 
-ms_source_system::ms_source_system(std::wstring dsn_name) : source_system(dsn_name)
+ms_source_system::ms_source_system(std::wstring dsn_name) : source_system_connection(dsn_name)
 {
 }
 

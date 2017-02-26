@@ -14,7 +14,7 @@ SELECT
 	@RowCount = COUNT(*)
 FROM $(schema_name).$(table_name)
 
--- return this to c++
+-- return this dataset to c++
 ;WITH value_histogram AS (
 SELECT 
 	$(column_name) AS ColumnValue
@@ -27,8 +27,9 @@ SELECT
 	ColumnValue
 	,ValueFrequency
 	,ValueProportion
-	,CUME_DIST() OVER(ORDER BY ValueProportion ASC) AS ValueCumulativeProportion
+	,CUME_DIST() OVER(ORDER BY ValueProportion DESC) AS ValueCumulativeProportion
 FROM value_histogram
+ORDER BY ValueProportion DESC
 
 
 
