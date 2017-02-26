@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D9E92EEC-1037-4B9F-8005-D3D101077C9D}"
 	ProjectSection(SolutionItems) = preProject
 		database_h.txt = database_h.txt
+		histogram_queries.sql = histogram_queries.sql
 		meta_queries.sql = meta_queries.sql
 		Readme.md = Readme.md
 	EndProjectSection

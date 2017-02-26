@@ -21,6 +21,7 @@ namespace meta {
 		column_iterator begin() const { return std::begin(columns_); }
 		column_iterator end() const { return std::end(columns_); }
 		std::wstring table_name() { return table_name_; }
+		std::weak_ptr<schema> get_parent() { return schema_; }
 		void push_back(std::shared_ptr<column> column_) { columns_.push_back(column_); }
 		friend std::wostream& operator<< (std::wostream& stream, const meta::table& table_);
 	};
