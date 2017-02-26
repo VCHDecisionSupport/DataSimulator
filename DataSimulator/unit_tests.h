@@ -1,9 +1,8 @@
 #pragma once
 #include "SqlTableInfo.h"
-#include "odbc_connection.h"
-#include "ms_source_system.h"
+#include "bc_odbc_connection.h"
+#include "sql_server_meta_factory.h"
 #include "column_value_histogram.h"
-
 
 namespace unit_test
 {
@@ -17,14 +16,14 @@ namespace unit_test
 
 	void OdbcConnection_()
 	{
-		odbc_connection conn;
+		bc_odbc_connection conn;
 		conn.connect();
 		conn.connect();
 	}
 
 	void sql_query()
 	{
-		odbc_connection conn;
+		bc_odbc_connection conn;
 		conn.connect();
 		std::vector<std::vector<std::wstring>> data = conn.execute_sql_query(std::wstring(L"SELECT * FROM CommunityMart.sys.tables;"));
 		std::cout << "rows recieved: " << sizeof(data) << std::endl;
@@ -81,7 +80,7 @@ namespace unit_test
 	//}
 	void meta_data()
 	{
-		odbc_connection conn;
+		bc_odbc_connection conn;
 		conn.connect();
 		//std::wstring database_name = L"WideWorldImportersDW";
 		std::wstring database_name = L"CommunityMart";
@@ -92,7 +91,7 @@ namespace unit_test
 	void meta_output()
 	{
 		std::wstring dsn_name_in(L"DSN=DevOdbcSqlServer;");
-		odbc_connection conn(dsn_name_in);
+		bc_odbc_connection conn(dsn_name_in);
 		conn.connect();
 		//std::wstring database_name = L"WideWorldImportersDW";
 		std::wstring database_name = L"CommunityMart";
@@ -102,7 +101,7 @@ namespace unit_test
 	void denodo_connect_query()
 	{
 		std::wstring dsn_name_in(L"DSN=DenodoODBC;");
-		odbc_connection conn(dsn_name_in);
+		bc_odbc_connection conn(dsn_name_in);
 		conn.connect();
 		conn.execute_sql_query(L"SELECT * FROM adtcmart_admission_discharge_fact;");
 	}
@@ -110,7 +109,7 @@ namespace unit_test
 	{
 		//std::wstring dsn_name_in(L"DSN=DevOdbcSqlServer;");
 		std::wstring dsn_name_in(L"DSN=SysDsnWwi;");
-		ms_source_system ms(dsn_name_in);
+		sql_server_meta_factory ms(dsn_name_in);
 		//ms.generate_meta_object(L"CommunityMart");
 		std::shared_ptr<meta::database> database_ = ms.generate_meta_object(L"WideWorldImportersDW");
 		std::wcout << "database shared_ptr use_count: " << database_.use_count() << std::endl;

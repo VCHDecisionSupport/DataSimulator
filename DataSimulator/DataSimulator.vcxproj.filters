@@ -54,12 +54,6 @@
     <ClInclude Include="ColumnInfo.h">
       <Filter>Header Files\odbc</Filter>
     </ClInclude>
-    <ClInclude Include="data_source_connection.h">
-      <Filter>Header Files\odbc</Filter>
-    </ClInclude>
-    <ClInclude Include="odbc_connection.h">
-      <Filter>Header Files\odbc</Filter>
-    </ClInclude>
     <ClInclude Include="SqlTableInfo.h">
       <Filter>Header Files\odbc</Filter>
     </ClInclude>
@@ -72,10 +66,13 @@
     <ClInclude Include="stdafx.h">
       <Filter>Header Files\misc</Filter>
     </ClInclude>
-    <ClInclude Include="ms_source_system.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="bc_odbc_connection.h">
+      <Filter>Header Files\odbc</Filter>
     </ClInclude>
-    <ClInclude Include="source_system_connection.h">
+    <ClInclude Include="bc_meta_factory.h">
+      <Filter>Header Files\odbc</Filter>
+    </ClInclude>
+    <ClInclude Include="sql_server_meta_factory.h">
       <Filter>Header Files\odbc</Filter>
     </ClInclude>
   </ItemGroup>
@@ -98,22 +95,22 @@
     <ClCompile Include="table.cpp">
       <Filter>Source Files\meta</Filter>
     </ClCompile>
-    <ClCompile Include="odbc_connection.cpp">
-      <Filter>Source Files\odbc</Filter>
-    </ClCompile>
     <ClCompile Include="schema_builder.cpp">
       <Filter>Source Files\odbc</Filter>
     </ClCompile>
     <ClCompile Include="SqlTableInfo.cpp">
       <Filter>Source Files\odbc</Filter>
     </ClCompile>
-    <ClCompile Include="ms_source_system.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="column_value_histogram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source_system_connection.cpp">
+    <ClCompile Include="bc_odbc_connection.cpp">
+      <Filter>Source Files\odbc</Filter>
+    </ClCompile>
+    <ClCompile Include="bc_meta_factory.cpp">
+      <Filter>Source Files\odbc</Filter>
+    </ClCompile>
+    <ClCompile Include="sql_server_meta_factory.cpp">
       <Filter>Source Files\odbc</Filter>
     </ClCompile>
   </ItemGroup>

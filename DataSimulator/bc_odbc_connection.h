@@ -1,14 +1,13 @@
 #pragma once
 #include"stdafx.h"
-#include"data_source_connection.h"
 #include "schema_builder.h"
 #include "ColumnInfo.h"
 
 namespace odbc {
 	const size_t DSN_STRING_MAX_LENGTH = 1000; /* max characters to store the DSN connection string */
 
-	// rejigged version of SqlTableInfo ODBC database sample 
-	class odbc_connection : public data_source_connection
+	// connects to and queries from odbc data source via preconfigured odbc system dsn (data source name)
+	class bc_odbc_connection
 	{
 		// ODBC data source name passed into SQLDriverConnect
 		std::wstring dsn_name_in_;
@@ -29,13 +28,13 @@ namespace odbc {
 		void InitializeResults(SqlDataPoint** this_data_row);
 
 	public:
-		odbc_connection();
-		odbc_connection(std::wstring dsn_name_in);
-		std::vector<std::vector<std::wstring>> execute_sql_query(std::wstring sql_query) override;
+		bc_odbc_connection();
+		bc_odbc_connection(std::wstring dsn_name_in);
+		std::vector<std::vector<std::wstring>> execute_sql_query(std::wstring sql_query);
 		meta::schema get_meta_schema(std::wstring database_name);
 		bool connect();
 		void execute_sql(std::wstring stmt);
-		~odbc_connection();
+		~bc_odbc_connection();
 	};
 
 

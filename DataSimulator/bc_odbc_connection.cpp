@@ -1,6 +1,6 @@
-#include "odbc_connection.h"
+#include "bc_odbc_connection.h"
 
-inline void odbc::odbc_connection::PopulateColumnInfo()
+inline void odbc::bc_odbc_connection::PopulateColumnInfo()
 {
 	std::cout << "PopulateColumnInfo (" << _result_column_count << " columns)" << std::endl;
 
@@ -51,7 +51,7 @@ inline void odbc::odbc_connection::PopulateColumnInfo()
 	}
 }
 
-inline void odbc::odbc_connection::InitializeResults(SqlDataPoint ** this_data_row)
+inline void odbc::bc_odbc_connection::InitializeResults(SqlDataPoint ** this_data_row)
 {
 	SqlDataPoint* this_data_point = nullptr;
 	SqlDataPoint* prev_data_point = nullptr;
@@ -84,7 +84,7 @@ inline void odbc::odbc_connection::InitializeResults(SqlDataPoint ** this_data_r
 	}
 }
 
-inline void odbc::odbc_connection::ProcessResults()
+inline void odbc::bc_odbc_connection::ProcessResults()
 {
 	SqlDataPoint* this_data_point = nullptr;
 	SqlDataPoint* first_data_point = nullptr;
@@ -137,7 +137,7 @@ inline void odbc::odbc_connection::ProcessResults()
 
 }
 
-odbc::odbc_connection::odbc_connection()
+odbc::bc_odbc_connection::bc_odbc_connection()
 {
 	dsn_name_in_ = std::wstring(L"DSN=DevOdbcSqlServer;UID=vch\\gcrowell;Trusted_Connection=Yes;");
 	dsn_name_in_ = std::wstring(L"DSN=SysDsnWwi;UID=user;Trusted_Connection=Yes;");
@@ -145,16 +145,16 @@ odbc::odbc_connection::odbc_connection()
 	dsn_name_in_ = std::wstring(L"DSN=DenodoODBC;");
 }
 
-odbc::odbc_connection::odbc_connection(std::wstring dsn_name_in) : dsn_name_in_(dsn_name_in) {}
+odbc::bc_odbc_connection::bc_odbc_connection(std::wstring dsn_name_in) : dsn_name_in_(dsn_name_in) {}
 
-inline std::vector<std::vector<std::wstring>> odbc::odbc_connection::execute_sql_query(std::wstring stmt)
+inline std::vector<std::vector<std::wstring>> odbc::bc_odbc_connection::execute_sql_query(std::wstring stmt)
 {
 	execute_sql(stmt);
 	ProcessResults();
 	return rows_of_columns_of_data_;
 }
 
-bool odbc::odbc_connection::connect()
+bool odbc::bc_odbc_connection::connect()
 {
 	// mutex within function
 	std::mutex conn_mutex;
@@ -210,7 +210,7 @@ bool odbc::odbc_connection::connect()
 	}
 }
 
-void odbc::odbc_connection::execute_sql(const std::wstring stmt)
+void odbc::bc_odbc_connection::execute_sql(const std::wstring stmt)
 {
 	std::wcout << "executing sql: " << std::endl << stmt << std::endl;
 	if (stmt.length() >= 2000)
@@ -285,7 +285,7 @@ void odbc::odbc_connection::execute_sql(const std::wstring stmt)
 }
 
 // TODO not working.  issue with unique pointer
-meta::schema odbc::odbc_connection::get_meta_schema(std::wstring database_name)
+meta::schema odbc::bc_odbc_connection::get_meta_schema(std::wstring database_name)
 {
 	std::wstring sql_fmt = L"\n\
 SELECT\n\
@@ -304,7 +304,7 @@ ON tab.object_id = col.object_id;";
 	return meta::schema_builder::build_schema(database_name, rows_of_columns_of_data_);
 }
 
-odbc::odbc_connection::~odbc_connection()
+odbc::bc_odbc_connection::~bc_odbc_connection()
 {
 	std::cout << "cleaning up ODBC connection" << std::endl;
 	if (_statement_handle)

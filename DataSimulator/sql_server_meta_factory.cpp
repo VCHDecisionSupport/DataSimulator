@@ -1,17 +1,15 @@
-#include "ms_source_system.h"
+#include "sql_server_meta_factory.h"
 
-
-
-ms_source_system::ms_source_system(std::wstring dsn_name) : source_system_connection(dsn_name)
+odbc::sql_server_meta_factory::sql_server_meta_factory(std::wstring dsn_name) : bc_meta_factory(dsn_name)
 {
 }
 
 
-ms_source_system::~ms_source_system()
+odbc::sql_server_meta_factory::~sql_server_meta_factory()
 {
 }
 
-std::wstring ms_source_system::schema_query()
+std::wstring odbc::sql_server_meta_factory::schema_query()
 {
 	std::wstring sql(
 		L"SELECT\n\
@@ -27,7 +25,7 @@ ON tab.object_id = col.object_id;\n");
 	return sql;
 }
 
-std::wstring ms_source_system::schema_query(std::wstring database_name)
+std::wstring odbc::sql_server_meta_factory::schema_query(std::wstring database_name)
 {
 	boost::wformat fmt(
 		L"SELECT\n\
@@ -44,7 +42,7 @@ ON tab.object_id = col.object_id;\n");
 	return fmt.str();
 }
 
-std::shared_ptr<meta::database> ms_source_system::generate_meta_object(std::wstring database_name)
+std::shared_ptr<meta::database> odbc::sql_server_meta_factory::generate_meta_object(std::wstring database_name)
 {
 	std::vector<std::vector<std::wstring>> data = odbc_connection_.execute_sql_query(schema_query(database_name));
 	std::wstring this_database_name;
