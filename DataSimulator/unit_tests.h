@@ -6,6 +6,12 @@
 
 namespace unit_test
 {
+	//const std::wstring database_name = L"CommunityMart";
+	const std::wstring database_name = L"WideWorldImportersDW";
+	//const std::wstring dsn_name_in(L"DSN=DenodoODBC;");
+	//const std::wstring dsn_name_in(L"DSN=DevOdbcSqlServer;");
+	const std::wstring dsn_name_in(L"DSN=SysDsnWwi;");
+
 	using namespace odbc;
 	void SqlTableInfo_()
 	{
@@ -16,16 +22,16 @@ namespace unit_test
 
 	void OdbcConnection_()
 	{
-		bc_odbc_connection conn;
+		bc_odbc_connection conn(dsn_name_in);
 		conn.connect();
 		conn.connect();
 	}
 
 	void sql_query()
 	{
-		bc_odbc_connection conn;
+		bc_odbc_connection conn(dsn_name_in);
 		conn.connect();
-		std::vector<std::vector<std::wstring>> data = conn.execute_sql_query(std::wstring(L"SELECT * FROM CommunityMart.sys.tables;"));
+		std::vector<std::vector<std::wstring>> data = conn.execute_sql_query(std::wstring(L"SELECT * FROM sys.tables;"));
 		std::cout << "rows recieved: " << sizeof(data) << std::endl;
 		std::wcout << "first data point: " << data.at(0).at(0) << std::endl;
 		for (auto row : data)
@@ -80,21 +86,21 @@ namespace unit_test
 	//}
 	void meta_data()
 	{
-		bc_odbc_connection conn;
+		bc_odbc_connection conn(dsn_name_in);
 		conn.connect();
-		//std::wstring database_name = L"WideWorldImportersDW";
-		std::wstring database_name = L"CommunityMart";
+		////std::wstring database_name = L"WideWorldImportersDW";
+		//std::wstring database_name = L"CommunityMart";
 		conn.get_meta_schema(database_name);
 		std::cout << "complete" << std::endl;
 	}
 
 	void meta_output()
 	{
-		std::wstring dsn_name_in(L"DSN=DevOdbcSqlServer;");
+		//std::wstring dsn_name_in(L"DSN=DevOdbcSqlServer;");
 		bc_odbc_connection conn(dsn_name_in);
 		conn.connect();
 		//std::wstring database_name = L"WideWorldImportersDW";
-		std::wstring database_name = L"CommunityMart";
+		//std::wstring database_name = L"CommunityMart";
 		meta::schema schema_ = conn.get_meta_schema(database_name);
 		std::wcout << schema_ << std::endl;
 	}
@@ -108,10 +114,10 @@ namespace unit_test
 	void ms_source()
 	{
 		//std::wstring dsn_name_in(L"DSN=DevOdbcSqlServer;");
-		std::wstring dsn_name_in(L"DSN=SysDsnWwi;");
+		//std::wstring dsn_name_in(L"DSN=SysDsnWwi;");
 		sql_server_meta_factory ms(dsn_name_in);
 		//ms.generate_meta_object(L"CommunityMart");
-		std::shared_ptr<meta::database> database_ = ms.generate_meta_object(L"WideWorldImportersDW");
+		std::shared_ptr<meta::database> database_ = ms.generate_meta_object(database_name);
 		std::wcout << "database shared_ptr use_count: " << database_.use_count() << std::endl;
 		std::for_each(database_->begin(), database_->end(), [&](std::shared_ptr<meta::schema> schema_ptr)
 		{

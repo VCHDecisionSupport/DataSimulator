@@ -4,8 +4,9 @@
 #include "schema.h"
 #include "table.h"
 #include "column.h"
-//
 namespace meta {
+	
+	// deprecated.  delete me.
 	class schema_builder
 	{
 	public:
