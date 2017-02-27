@@ -1,6 +1,5 @@
 #pragma once
 #include"stdafx.h"
-#include"schema.h"
 #include"column.h"
 
 namespace meta {
@@ -13,14 +12,16 @@ namespace meta {
 		std::wstring table_name_;
 		std::vector<std::shared_ptr<column>> columns_;
 		std::weak_ptr<schema> schema_;
+		boost::wformat fully_qualified_table_name_fmt_;// (std::wstring(L"asdf"));
 	public:
 		table() : columns_{} {}
-		table(std::wstring table_name, std::vector<std::shared_ptr<column>> columns) : table_name_(table_name), columns_(move(columns)) {}
+		table(std::wstring table_name, std::vector<std::shared_ptr<column>> columns) : table_name_(table_name), columns_(move(columns)), fully_qualified_table_name_fmt_(L"[%s].[%s].[%s]") {}
 		table(std::wstring table_name, std::weak_ptr<schema> schema) : table_name_(table_name), schema_(schema) {}
 		~table();
 		column_iterator begin() const { return std::begin(columns_); }
 		column_iterator end() const { return std::end(columns_); }
 		std::wstring table_name() { return table_name_; }
+		//std::wstring fully_qualified_table_name() { return (fully_qualified_table_name_fmt_ % (schema_.lock().get())->get_parent().lock().get()->database_name() % schema_.lock().get()->schema_name() % table_name_).str(); }
 		std::weak_ptr<schema> get_parent() { return schema_; }
 		void push_back(std::shared_ptr<column> column_) { columns_.push_back(column_); }
 		friend std::wostream& operator<< (std::wostream& stream, const meta::table& table_);

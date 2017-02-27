@@ -75,6 +75,9 @@
     <ClInclude Include="sql_server_meta_factory.h">
       <Filter>Header Files\odbc</Filter>
     </ClInclude>
+    <ClInclude Include="abc_odbc_object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

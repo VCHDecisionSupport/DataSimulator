@@ -149,6 +149,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="abc_odbc_object.h" />
     <ClInclude Include="column.h" />
     <ClInclude Include="ColumnInfo.h" />
     <ClInclude Include="column_value_histogram.h" />

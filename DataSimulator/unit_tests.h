@@ -3,6 +3,7 @@
 #include "bc_odbc_connection.h"
 #include "sql_server_meta_factory.h"
 #include "column_value_histogram.h"
+#include "abc_odbc_object.h"
 
 namespace unit_test
 {
@@ -134,6 +135,19 @@ namespace unit_test
 		meta::column_value_histogram value_histogram(std::move(test_hist));
 		std::wstring col_value = value_histogram.rand_column_value();
 		std::wcout << "returned from histogram object: " << col_value << std::endl;
+	}
+	void meta_base_class()
+	{
+		meta::db db_;
+	}
+	void uinit_weak_ptr()
+	{
+		std::weak_ptr<std::wstring> wPtr;
+		
+		std::wcout << "expired " << wPtr.expired() << std::endl; // 1 OK
+		std::wcout << "use count " << wPtr.use_count() << std::endl; // 0 OK
+		//wPtr.lock(); // OK
+		//std::wcout << *wPtr.lock().get() << std::endl; // ERROR.
 	}
 	//void signals()
 	//{

@@ -5,34 +5,31 @@ odbc::sql_server_meta_factory::sql_server_meta_factory(std::wstring dsn_name) : 
 }
 
 
-std::wstring odbc::sql_server_meta_factory::table_row_count_query(meta::table & table_)
-{
-	table_row_count_query_fmt = boost::wformat(
-		L"SELECT COUNT(*) FROM [%s].[%s].[%s]"
-	);
-	table_row_count_query_fmt % (table_.get_parent().lock()->get_parent().lock().get()->database_name()) % (*table_.get_parent().lock().get()->schema_name) % table_.table_name();
-	//TODO
-	std::wcout << table_row_count_query_fmt.str() << std::endl;
-	return std::wstring();
-}
+//std::wstring odbc::sql_server_meta_factory::table_row_count_query(meta::table & table_)
+//{
+//	std::wstring query((table_row_count_query_fmt % table_.fully_qualified_table_name()).str());
+//	std::wcout << query << std::endl;
+//	return query;
+//}
+//
+//long long unsigned  odbc::sql_server_meta_factory::get_table_row_count(meta::table & table_)
+//{
+//	return 0;
+//}
+//
+//std::wstring odbc::sql_server_meta_factory::column_value_histogram_query(meta::column & column_)
+//{
+//	
+//	table_row_count_query_fmt = boost::wformat(
+//		L"SELECT COUNT(*) FROM %s"
+//	);
+//	return std::wstring();
+//}
 
-long long unsigned  odbc::sql_server_meta_factory::get_table_row_count(meta::table & table_)
-{
-	return 0;
-}
-
-std::wstring odbc::sql_server_meta_factory::column_value_histogram_query(meta::column & column_)
-{
-	boost::wformat fmt(
-
-	);
-	return std::wstring();
-}
-
-meta::column_value_histogram odbc::sql_server_meta_factory::generate_column_value_histogram(meta::column & column_)
-{
-	return meta::column_value_histogram();
-}
+//meta::column_value_histogram odbc::sql_server_meta_factory::generate_column_value_histogram(meta::column & column_)
+//{
+//	return meta::column_value_histogram();
+//}
 
 odbc::sql_server_meta_factory::~sql_server_meta_factory()
 {

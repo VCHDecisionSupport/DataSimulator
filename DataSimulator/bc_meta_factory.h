@@ -18,11 +18,11 @@ namespace odbc
 		virtual std::wstring schema_query(std::wstring database_name) = 0;
 		virtual std::shared_ptr<meta::database> generate_meta_object(std::wstring database_name) = 0;
 
-		virtual std::wstring table_row_count_query(meta::table& table_) = 0;
-		virtual long long unsigned get_table_row_count(meta::table& table_) = 0;
+		//virtual std::wstring table_row_count_query(meta::table& table_) = 0;
+		//virtual long long unsigned get_table_row_count(meta::table& table_) = 0;
 
-		virtual std::wstring column_value_histogram_query(meta::column& column_) = 0;
-		virtual meta::column_value_histogram generate_column_value_histogram(meta::column& column_) = 0;
+		//virtual std::wstring column_value_histogram_query(meta::column& column_) = 0;
+		//virtual meta::column_value_histogram generate_column_value_histogram(meta::column& column_) = 0;
 		~bc_meta_factory();
 	};
 

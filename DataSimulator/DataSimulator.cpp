@@ -16,15 +16,19 @@ int main()
 {
 	//unit_test::SqlTableInfo_();
 	//unit_test::OdbcConnection_();
-	unit_test::sql_query();
+	////unit_test::sql_query();
 	////unit_test::schema_builder();
 	//unit_test::schema_class_builder();
-	unit_test::meta_data();
-	unit_test::meta_output();
+	////unit_test::meta_data();
+	////unit_test::meta_output();
 	//unit_test::denodo_connect_query();
-	unit_test::ms_source();
+	////unit_test::ms_source();
 	//unit_test::signals();
-	unit_test::value_histogram();
+	////unit_test::value_histogram();
+
+	//unit_test::meta_base_class();
+	unit_test::uinit_weak_ptr();
+
 	user_exit();
 	return 0;
 }
